@@ -8,7 +8,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import model.*;
-import view.Affichage;
+import view.ViewEnnemi;
+import view.ViewMap;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,11 +31,11 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.environnement = new Environnement();
-        Affichage.affichermap(this.Tilepane, this.environnement.getMap());
+        ViewMap.affichermap(this.Tilepane, this.environnement.getMap());
         this.environnement.Init();
         
         for(Ennemies e: this.environnement.getEnnemies()){
-            Affichage.afficherMob(this.pane, e);
+            ViewEnnemi.afficherMob(this.pane, e);
         }
 
         for(int i=0; i<this.pane.getChildren().size();i++){
