@@ -64,7 +64,6 @@ public abstract class Ennemies  {
 
     public void seDeplace(){
         System.out.println("Se déplace");
-        int choix=(int)Math.floor(Math.random());
 
         SetX( this.getXValues()+this.vitesse);
         SetY( this.getYValues()+this.vitesse);

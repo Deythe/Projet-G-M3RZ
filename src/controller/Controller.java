@@ -4,12 +4,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import model.*;
 import view.ViewEnnemi;
 import view.ViewMap;
+import view.ViewTourelle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,7 +35,7 @@ public class Controller implements Initializable {
         this.environnement = new Environnement();
         ViewMap.affichermap(this.Tilepane, this.environnement.getMap());
         this.environnement.Init();
-        
+        this.environnement.getTourelles().addListener(new Observateur(this.pane));
         for(Ennemies e: this.environnement.getEnnemies()){
             ViewEnnemi.afficherMob(this.pane, e);
         }
@@ -47,7 +49,6 @@ public class Controller implements Initializable {
                 }
             }
         }
-
         initAnimation();
         gameLoop.play();
     }
@@ -77,6 +78,12 @@ public class Controller implements Initializable {
                 })
         );
         gameLoop.getKeyFrames().add(kf);
+    }
+
+    public void placeTourelle(MouseEvent e){
+        int mouseX = (int)e.getX();
+        int mouseY = (int)e.getY();
+        this.environnement.getTourelles().add(new Tourelle2Base(mouseX, mouseY));
     }
 
 }
