@@ -10,4 +10,14 @@ public class BananaMan extends Ennemies {
         super(v);
     }
 
+    @Override
+    public void prendreDesDgt(int dgt){
+        this.setPv(this.getPv()-dgt);
+    }
+
+    @Override
+    public boolean estMort(){
+        return this.getPv()<=0;
+    }
+
 }

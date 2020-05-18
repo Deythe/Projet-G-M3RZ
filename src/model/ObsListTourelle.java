@@ -4,11 +4,11 @@ import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Pane;
 import view.ViewTourelle;
 
-public class Observateur implements ListChangeListener<Tourelles> {
+public class ObsListTourelle implements ListChangeListener<Tourelles> {
 
     private Pane pane;
 
-    public Observateur(Pane p){
+    public ObsListTourelle(Pane p){
         this.pane =p;
     }
 

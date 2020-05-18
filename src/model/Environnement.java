@@ -41,9 +41,4 @@ public class Environnement {
         this.map = map;
     }
 
-    public void Init(){
-        for(int i=0; i<5;i++){
-            this.ennemies.add(new BananaMan(2));
-        }
-    }
 }

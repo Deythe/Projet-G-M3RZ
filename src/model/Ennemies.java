@@ -62,10 +62,19 @@ public abstract class Ennemies  {
         this.id = id;
     }
 
-    public void seDeplace(){
-        System.out.println("Se déplace");
-
-        SetX( this.getXValues()+this.vitesse);
-        SetY( this.getYValues()+this.vitesse);
+    public int getPv() {
+        return pv;
     }
+
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
+    public void seDeplace(){
+        SetX( this.getXValues()+this.vitesse);
+    }
+
+    public abstract void prendreDesDgt(int dgt);
+
+    public abstract boolean estMort();
 }

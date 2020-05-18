@@ -11,7 +11,6 @@ import javafx.util.Duration;
 import model.*;
 import view.ViewEnnemi;
 import view.ViewMap;
-import view.ViewTourelle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,13 +33,10 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.environnement = new Environnement();
         ViewMap.affichermap(this.Tilepane, this.environnement.getMap());
-        this.environnement.Init();
-        this.environnement.getTourelles().addListener(new Observateur(this.pane));
-        for(Ennemies e: this.environnement.getEnnemies()){
-            ViewEnnemi.afficherMob(this.pane, e);
-        }
+        this.environnement.getTourelles().addListener(new ObsListTourelle(this.pane));
+        this.environnement.getEnnemies().addListener(new ObsListEnnemies(this.pane));
 
-        for(int i=0; i<this.pane.getChildren().size();i++){
+        /*for(int i=0; i<this.pane.getChildren().size();i++){
             for(Ennemies a : this.environnement.getEnnemies()){
                 if (a.getId().equals(this.pane.getChildren().get(i).getId())){
                     this.pane.getChildren().get(i).translateXProperty().bind(a.getX());
@@ -49,6 +45,8 @@ public class Controller implements Initializable {
                 }
             }
         }
+
+         */
         initAnimation();
         gameLoop.play();
     }
@@ -64,16 +62,29 @@ public class Controller implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==200){
+                    if(temps==1000){
                         System.out.println("fini");
                         gameLoop.stop();
                     }
-                    else if (temps%5==0){
-                        System.out.println("un tour");
+
+                    if(temps%20==0){
+                        System.out.println("Pop");
+                        this.environnement.getEnnemies().add(new BananaMan(0,0,2));
+                    }
+
+                    if (temps%5==0){
+                        System.out.println("Tour");
                         for(Ennemies a : this.environnement.getEnnemies()) {
                             a.seDeplace();
                         }
+
+                        for(Tourelles t : this.environnement.getTourelles()){
+                            t.checkRange(this.environnement.getEnnemies());
+                            //t.Tire();
+                        }
                     }
+
+
                     temps++;
                 })
         );

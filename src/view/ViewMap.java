@@ -12,9 +12,9 @@ import model.Map;
 public class ViewMap {
 
     public static void affichermap(TilePane t, Map map){
+        Image image = new Image("/images/tilesetTest.png");
         for(int x=0; x<map.getMap().length; x++){
             for(int y=0; y<map.getMap()[x].length;y++){
-                Image image = new Image("/images/tilesetTest.png");
                 ImageView test = new ImageView();
                 test.setImage(image);
                 switch (map.getMap()[x][y]){

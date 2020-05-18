@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Map {
     private int[][] map;
     private int x,y;
