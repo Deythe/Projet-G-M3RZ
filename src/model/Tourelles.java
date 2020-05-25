@@ -4,14 +4,12 @@ public abstract class Tourelles {
     private double x,y;
     private int pv;
     private String id;
-    private static int nbTourelle=0;
-    private int type;
+    private static int nbTourelle = 0;
 
-    public Tourelles(double x, double y, int pv, int type) {
+    public Tourelles(double x, double y, int pv) {
         this.x = x;
         this.y = y;
         this.pv = pv;
-        this.id = ""+nbTourelle;
-        this.type = type;
+        this.id = "t" + nbTourelle;
     }
 }

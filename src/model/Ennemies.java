@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
@@ -9,14 +11,16 @@ public abstract class Ennemies  {
     private double vitesse;
     private String id;
     private int pv;
+    private ArrayList<Case> cheminAParcourir;
+    private Environnement jeu;
 
     public Ennemies(double x, double y, double v) {
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
         this.vitesse = v;
         nbEnnemi++;
-        this.id=""+nbEnnemi;
-        this.pv=10;
+        this.id = "e"+nbEnnemi;
+        this.pv = 10;
     }
 
     public Ennemies(double v){
@@ -26,7 +30,7 @@ public abstract class Ennemies  {
         System.out.println(y.getValue());
         this.vitesse = v;
         nbEnnemi++;
-        this.id=""+nbEnnemi;
+        this.id = "e" + nbEnnemi;
         this.pv=10;
     }
 
@@ -64,9 +68,9 @@ public abstract class Ennemies  {
 
     public void seDeplace(){
         System.out.println("Se déplace");
-        int choix=(int)Math.floor(Math.random());
+        int choix = (int)Math.floor(Math.random());
 
-        SetX( this.getXValues()+this.vitesse);
-        SetY( this.getYValues()+this.vitesse);
+        SetX(this.getXValues() + this.vitesse);
+        SetY(this.getYValues() + this.vitesse);
     }
 }

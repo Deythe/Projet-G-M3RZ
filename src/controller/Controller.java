@@ -53,7 +53,7 @@ public class Controller implements Initializable {
 
     private void initAnimation() {
         gameLoop = new Timeline();
-        temps=0;
+        temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
@@ -62,11 +62,11 @@ public class Controller implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==200){
+                    if(temps == 200){
                         System.out.println("fini");
                         gameLoop.stop();
                     }
-                    else if (temps%5==0){
+                    else if (temps % 5 == 0){
                         System.out.println("un tour");
                         for(Ennemies a : this.environnement.getEnnemies()) {
                             a.seDeplace();
