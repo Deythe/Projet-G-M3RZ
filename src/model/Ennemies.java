@@ -1,33 +1,36 @@
 package model;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Ennemies  {
-    private static int nbEnnemi = 0;
+    private Environnement e;
+    private static int nbEnnemi = 1;
     private DoubleProperty x,y;
     private double vitesse;
     private String id;
-    private int pv;
+    private boolean vivant;
+    private IntegerProperty pv;
 
-    public Ennemies(double x, double y, double v) {
+    public Ennemies(double x, double y, double v, int hp) {
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
         this.vitesse = v;
         nbEnnemi++;
-        this.id=""+nbEnnemi;
-        this.pv=10;
+        this.id="E"+nbEnnemi;
+        this.pv= new SimpleIntegerProperty(hp);
+        this.vivant = true;
     }
 
-    public Ennemies(double v){
+    public Ennemies(double v, int hp){
         this.x= new SimpleDoubleProperty(Math.floor(Math.random()*450+50));
-        System.out.println(x.getValue());
         this.y= new SimpleDoubleProperty(Math.floor(Math.random()*450+50));
-        System.out.println(y.getValue());
         this.vitesse = v;
         nbEnnemi++;
         this.id=""+nbEnnemi;
-        this.pv=10;
+        this.pv = new SimpleIntegerProperty(hp);
     }
 
     public final DoubleProperty getX() {
@@ -62,19 +65,33 @@ public abstract class Ennemies  {
         this.id = id;
     }
 
-    public int getPv() {
-        return pv;
+    public IntegerProperty getPV(){
+        return this.pv;
     }
 
-    public void setPv(int pv) {
-        this.pv = pv;
+    public int getPvValue() {
+        return pv.getValue();
+    }
+
+    public void setPvValue(int pv) {
+        this.pv.setValue(pv);
+    }
+
+    public String toStringPV(){
+        return ""+this.pv;
     }
 
     public void seDeplace(){
         SetX( this.getXValues()+this.vitesse);
     }
 
-    public abstract void prendreDesDgt(int dgt);
+    public boolean isVivant() {
+        return this.getPvValue()>0;
+    }
 
-    public abstract boolean estMort();
+    public void setVivant(boolean vivant) {
+        this.vivant = vivant;
+    }
+
+    public abstract void prendreDesDgt(int dgt);
 }

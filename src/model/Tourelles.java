@@ -5,18 +5,21 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 
 public abstract class Tourelles {
+    private Environnement environnement;
     private DoubleProperty x,y;
     private int pv;
     private String id;
-    private static int nbTourelle=0;
+    private static int nbTourelle=1;
     private int range;
 
-    public Tourelles(double x, double y, int pv, int r) {
+    public Tourelles(Environnement e, double x, double y, int pv, int r) {
+        this.environnement =e;
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
         this.pv = pv;
-        this.id = ""+nbTourelle;
+        this.id = "T"+nbTourelle;
         this.range = r;
+        nbTourelle++;
     }
 
     public String getId() {
@@ -57,6 +60,14 @@ public abstract class Tourelles {
 
     public final double getYValues(){
         return y.getValue();
+    }
+
+    public Environnement getEnvironnement() {
+        return environnement;
+    }
+
+    public void setEnvironnement(Environnement environnement) {
+        this.environnement = environnement;
     }
 
     public abstract void checkRange(ObservableList<Ennemies> e);

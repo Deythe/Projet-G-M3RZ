@@ -5,8 +5,8 @@ import javafx.collections.ObservableList;
 public class Tourelle2Base extends Tourelles{
     private Ennemies cible;
 
-    public Tourelle2Base(double x, double y) {
-        super(x, y, 10, 64);
+    public Tourelle2Base(Environnement e, double x, double y) {
+        super(e, x, y, 10, 96);
         this.cible = null;
     }
 
@@ -31,6 +31,8 @@ public class Tourelle2Base extends Tourelles{
 
     @Override
     public void Tire(){
-        this.cible.prendreDesDgt(5);
+        if(this.cible!=null){
+            this.getEnvironnement().getTirs().add(new Tir(this.getEnvironnement(), this.cible, this.getXValues(), this.getYValues()));
+        }
     }
 }

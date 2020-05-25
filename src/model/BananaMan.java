@@ -3,21 +3,15 @@ package model;
 public class BananaMan extends Ennemies {
 
     public BananaMan(double x, double y, double v) {
-        super(x, y, v);
+        super(x, y, v, 10);
     }
 
     public BananaMan(double v) {
-        super(v);
+        super(v, 50);
     }
 
     @Override
     public void prendreDesDgt(int dgt){
-        this.setPv(this.getPv()-dgt);
+        this.setPvValue(this.getPvValue()-dgt);
     }
-
-    @Override
-    public boolean estMort(){
-        return this.getPv()<=0;
-    }
-
 }
