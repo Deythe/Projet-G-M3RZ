@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import model.BananaMan;
-import model.Ennemies;
+import model.Ennemi;
 import model.Map;
 
 public class Affichage {
@@ -55,7 +55,7 @@ public class Affichage {
         }
     }
 
-    public static void afficherMob(Pane p, Ennemies a){
+    public static void afficherMob(Pane p, Ennemi a){
         ImageView test = new ImageView();
         if(a instanceof BananaMan){
             test.setImage(new Image("/images/Banana junky.png"));

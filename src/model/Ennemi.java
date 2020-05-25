@@ -3,34 +3,63 @@ package model;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
-public abstract class Ennemies  {
+public abstract class Ennemi {
     private static int nbEnnemi = 0;
     private DoubleProperty x,y;
     private double vitesse;
     private String id;
     private int pv;
+    protected Jeu jeu;
 
-    public Ennemies(double x, double y, double v) {
+    public Ennemi(int pv, double x, double y, double v, Jeu j) {
+        this.pv=pv;
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
         this.vitesse = v;
         nbEnnemi++;
-        this.id=""+nbEnnemi;
+        this.id="e"+nbEnnemi;
         this.pv=10;
+        this.jeu=j;
     }
 
-    public Ennemies(double v){
+    public Ennemi(double v){
         this.x= new SimpleDoubleProperty(Math.floor(Math.random()*450+50));
         System.out.println(x.getValue());
         this.y= new SimpleDoubleProperty(Math.floor(Math.random()*450+50));
         System.out.println(y.getValue());
         this.vitesse = v;
         nbEnnemi++;
-        this.id=""+nbEnnemi;
+        this.id="e"+nbEnnemi;
         this.pv=10;
     }
 
+    public void decrementerPv(int a){
+        this.pv-=a;
+    }
+    public abstract void agit();
+
+    public void kamikaze(){
+
+    }
+
+    public int getPv(){
+        return this.pv;
+    }
+
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
+    public double getVitesse() {
+        return vitesse;
+    }
+
+    public void setVitesse(double vitesse) {
+        this.vitesse = vitesse;
+    }
+
     public final DoubleProperty getX() {
+
         return x;
     }
 
@@ -62,9 +91,9 @@ public abstract class Ennemies  {
         this.id = id;
     }
 
-    public void seDeplace(){
+    public void seDeplacer(){
         System.out.println("Se déplace");
-        int choix=(int)Math.floor(Math.random());
+        /*int choix=(int)Math.floor(Math.random());*/
 
         SetX( this.getXValues()+this.vitesse);
         SetY( this.getYValues()+this.vitesse);

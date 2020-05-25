@@ -6,10 +6,11 @@ public class Map {
     private int x,y;
     private static int lvl=0;
 
-    public Map() {
+    public Map(Base b) {
         this.map = chargement();
         this.x = 640;
         this.y = 640;
+        this.baseAllie=b;
         lvl++;
     }
 
@@ -49,6 +50,10 @@ public class Map {
 
     public int[][] getMap() {
         return map;
+    }
+
+    public Base getBaseAllie() {
+        return baseAllie;
     }
 
     public void setMap(int[][] map) {

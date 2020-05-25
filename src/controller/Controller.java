@@ -33,12 +33,12 @@ public class Controller implements Initializable {
         Affichage.affichermap(this.Tilepane, this.environnement.getMap());
         this.environnement.Init();
         
-        for(Ennemies e: this.environnement.getEnnemies()){
+        for(Ennemi e: this.environnement.getEnnemis()){
             Affichage.afficherMob(this.pane, e);
         }
 
         for(int i=0; i<this.pane.getChildren().size();i++){
-            for(Ennemies a : this.environnement.getEnnemies()){
+            for(Ennemi a : this.environnement.getEnnemis()){
                 if (a.getId().equals(this.pane.getChildren().get(i).getId())){
                     this.pane.getChildren().get(i).translateXProperty().bind(a.getX());
                     this.pane.getChildren().get(i).translateYProperty().bind(a.getY());
@@ -68,8 +68,8 @@ public class Controller implements Initializable {
                     }
                     else if (temps%5==0){
                         System.out.println("un tour");
-                        for(Ennemies a : this.environnement.getEnnemies()) {
-                            a.seDeplace();
+                        for(Ennemi a : this.environnement.getEnnemis()) {
+                            a.seDeplacer();
                         }
                     }
                     temps++;

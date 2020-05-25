@@ -1,25 +1,44 @@
 package model;
 
-public abstract class Tourelles {
+public abstract class Tourelle {
+
 
     public static void setNbTourelle(int nbTourelle) {
-        Tourelles.nbTourelle = nbTourelle;
+        Tourelle.nbTourelle = nbTourelle;
     }
 
     private double x,y;
-    private int pv;
     private String id;
     private static int nbTourelle=0;
-
-    public Tourelles(double x, double y, int pv) {
+    protected Jeu jeu;
+    private int tempsInactif;
+    public Tourelle(double x, double y, Jeu j) {
         this.x = x;
         this.y = y;
-        this.pv = pv;
         this.id = "t"+nbTourelle;
+        this.jeu=j;
+        this.tempsInactif=0;
     }
 
+    public boolean verifInactif(){
+        if(this.tempsInactif!=0){
+            return true;
+        }return false;
+    }
     public abstract void agit();
 
+    public int getTempsInactif(){
+        return this.tempsInactif;
+    }
+    public void setTempsInactif(int temps) {
+            this.tempsInactif=temps;
+    }
+
+    public void decrementertempsIncactif(int montant){
+        if (this.tempsInactif-montant>=0){
+            this.tempsInactif-=montant;
+        }else this.setTempsInactif(0);
+    }
     public double getX() {
         return x;
     }
@@ -34,14 +53,6 @@ public abstract class Tourelles {
 
     public void setY(double y) {
         this.y = y;
-    }
-
-    public int getPv() {
-        return pv;
-    }
-
-    public void setPv(int pv) {
-        this.pv = pv;
     }
 
     public String getId() {
