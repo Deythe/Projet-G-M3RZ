@@ -3,7 +3,6 @@ package controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,8 +11,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import model.*;
+import model.Ennemies.BananaMan;
+import model.ListeObservable.ObsListEnnemies;
+import model.ListeObservable.ObsListTirs;
+import model.ListeObservable.ObsListTourelle;
+import model.Tourelles.Tourelle2Base;
+import model.Tourelles.Tourelles;
 import view.ViewEnnemi;
 import view.ViewMap;
+import view.ViewTourelle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,10 +47,14 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.environnement = new Environnement();
+        //this.environnement.getGraphe().creationDuGraphe();
         this.choix=false;
-        ViewMap.affichermap(this.Tilepane, this.environnement.getMap());
-        this.environnement.getTourelles().addListener(new ObsListTourelle(this.pane));
-        this.environnement.getEnnemies().addListener(new ObsListEnnemies(this.pane));
+        ViewEnnemi viewEnnemi = new ViewEnnemi(this.pane);
+        ViewTourelle viewTourelle = new ViewTourelle(this.pane);
+        ViewMap viewMap = new ViewMap(this.Tilepane);
+        viewMap.affichermap(this.environnement.getMap());
+        this.environnement.getTourelles().addListener(new ObsListTourelle(this.pane, viewTourelle));
+        this.environnement.getEnnemies().addListener(new ObsListEnnemies(this.pane, viewEnnemi));
         this.environnement.getTirs().addListener(new ObsListTirs(this.pane));
         initAnimation();
     }
@@ -67,36 +77,16 @@ public class Controller implements Initializable {
                     }
 
                     if(temps%1==0){
-                        for (int i=0; i<this.environnement.getTirs().size(); i++) {
-                            this.environnement.getTirs().get(i).seDeplace();
-                        }
-                    }
-
-                    if (temps%10==0){
-                        this.environnement.enleverMob();
-                        for(Ennemies a : this.environnement.getEnnemies()) {
-                            a.seDeplace();
-                        }
-
+                        this.environnement.unTour();
                         for(Tourelles t : this.environnement.getTourelles()){
                             t.checkRange(this.environnement.getEnnemies());
                         }
                     }
 
-                    if(temps%200==0){
-                        for(Tourelles t : this.environnement.getTourelles()){
-                            t.Tire();
-                        }
-                    }
-
-                    if(temps%250==0){
-                        System.out.println("Pop");
-                        this.environnement.getEnnemies().add(new BananaMan(0,15,2));
-                    }
-
                     temps++;
                 })
         );
+
         gameLoop.getKeyFrames().add(kf);
     }
 
@@ -104,10 +94,10 @@ public class Controller implements Initializable {
         if(this.choix) {
             int mouseX = (int) e.getX();
             int mouseY = (int) e.getY();
-            if (!this.environnement.existeTourelle(mouseX / 32 * 32, mouseY / 32 * 32)) {
+            if (!this.environnement.existeTourelle(mouseX / 32 * 32, mouseY / 32 * 32) && this.environnement.getMap().quelleCase(mouseX, mouseY)!=0) {
                 this.environnement.getTourelles().add(new Tourelle2Base(this.environnement, mouseX / 32 * 32, mouseY / 32 * 32));
             } else {
-                System.out.println("Une tourelle existe déja ici");
+                System.out.println("Vous ne pouvez pas placer de tourelles ici");
             }
         }
     }

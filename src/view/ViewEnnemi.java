@@ -1,19 +1,24 @@
 package view;
 
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import model.BananaMan;
-import model.Ennemies;
+import model.Ennemies.*;
+import model.Ennemies.Ennemies;
 
 public class ViewEnnemi {
-    public static void afficherMob(Pane p, Ennemies a){
+    private Pane p;
+
+    public ViewEnnemi(Pane p) {
+        this.p = p;
+    }
+
+    public void afficherMob(Ennemies a){
         ImageView test = new ImageView();
         if(a instanceof BananaMan){
             test.setImage(new Image("/images/Banana junky.png"));
         }
         test.setId(a.getId());
-        p.getChildren().add(test);
+        this.p.getChildren().add(test);
     }
 }

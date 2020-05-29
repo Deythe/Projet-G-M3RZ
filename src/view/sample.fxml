@@ -29,7 +29,7 @@
                      <graphic>
                         <ImageView fitHeight="51.0" fitWidth="39.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/Platform (1).png" />
+                              <Image url="@../images/Platform.png" />
                            </image>
                         </ImageView>
                      </graphic>

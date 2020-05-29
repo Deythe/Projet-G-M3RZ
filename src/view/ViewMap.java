@@ -3,21 +3,27 @@ package view;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import model.BananaMan;
-import model.Ennemies;
 import model.Map;
 
 public class ViewMap {
 
-    public static void affichermap(TilePane t, Map map){
+    private TilePane p;
+
+    public ViewMap(TilePane p) {
+        this.p = p;
+    }
+
+    public void affichermap(Map map){
         Image image = new Image("/images/tilesetTest.png");
         for(int x=0; x<map.getMap().length; x++){
             for(int y=0; y<map.getMap()[x].length;y++){
                 ImageView test = new ImageView();
                 test.setImage(image);
                 switch (map.getMap()[x][y]){
+                    case -1:
+                        test.setViewport(new Rectangle2D(0,0,32,32));
+                        break;
                     case 0:
                         test.setViewport(new Rectangle2D(0,0,32,32));
                         break;
@@ -66,9 +72,12 @@ public class ViewMap {
                     case 25:
                         test.setViewport(new Rectangle2D(32,192,32,32));
                         break;
+                    case 100:
+                        test.setViewport(new Rectangle2D(0,0,32,32));
+                        break;
                     default:break;
                 }
-                t.getChildren().add(test);
+                this.p.getChildren().add(test);
             }
         }
     }

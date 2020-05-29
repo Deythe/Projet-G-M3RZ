@@ -2,26 +2,27 @@ package model;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import model.Ennemies.Ennemies;
 
 public class Tir {
     private Environnement e;
     private int degat;
     private Ennemies cible;
-
     private DoubleProperty x;
     private DoubleProperty y;
     private String id;
-    private int v, range;
+    private int v;
+    private boolean Detruit;
     private static int nbTir;
 
-    public Tir(Environnement e, Ennemies cible, double x, double y) {
+    public Tir( Environnement e, Ennemies cible, double x, double y) {
+        this.Detruit =false;
         this.e=e;
         this.degat = 2;
         this.cible = cible;
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
         this.v = 2;
-        this.range=5 ;
         this.id = "Tir :"+nbTir;
         nbTir++;
     }
@@ -58,33 +59,39 @@ public class Tir {
         this.id = id;
     }
 
+    public boolean EstDetruit() {
+        return Detruit;
+    }
+
+    public void EstDetruit(boolean estDetruit) {
+        this.Detruit = estDetruit;
+    }
+
     public void seDeplace(){
-        if(this.cible.getXValues() + this.range >this.getXValues()){
-            this.SetX(this.getXValues()+v);
-        }
+        try {
+            if (this.cible.getXValues() > this.getXValues()) {
+                this.SetX(this.getXValues() + v);
+            } else if (this.cible.getXValues() < this.getXValues()) {
+                this.SetX(this.getXValues() - v);
+            }
 
-        else if(this.cible.getXValues() - this.range <this.getXValues()){
-            this.SetX(this.getXValues()-v);
-        }
+            if (this.cible.getYValues() > this.getYValues()) {
+                this.SetY(this.getYValues() + v);
+            } else if (this.cible.getYValues() < this.getYValues()) {
+                this.SetY(this.getYValues() - v);
+            }
 
-        if(this.cible.getYValues() + this.range>this.getYValues()){
-            this.SetY(this.getYValues()+v);
+            this.touche();
+        }catch (Exception e){
+            this.e.getTirs().remove(this);
         }
-
-        else if(this.cible.getYValues() - this.range <this.getYValues()){
-            this.SetY(this.getYValues()-v);
-        }
-
-        this.touche();
     }
 
     public void touche() {
-
-        if (this.getXValues() >= this.cible.getXValues() - this.range && this.getXValues() <= this.cible.getXValues() + this.range && this.getYValues() >= this.cible.getYValues() - this.range && this.getYValues() <= this.cible.getYValues() + this.range) {
+        if (this.getXValues() >= this.cible.getXValues() && this.getXValues() <= this.cible.getHitboxX() && this.getYValues() >= this.cible.getYValues() && this.getYValues() <= this.cible.getHitboxY()) {
             System.out.println("Touché");
             this.cible.prendreDesDgt(this.degat);
             this.e.getTirs().remove(this);
-
         }
     }
 }

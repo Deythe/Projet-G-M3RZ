@@ -1,36 +1,41 @@
-package model;
+package model.Ennemies;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import model.Environnement;
+import model.Sommet;
 
 public abstract class Ennemies  {
     private Environnement e;
     private static int nbEnnemi = 1;
+
     private DoubleProperty x,y;
+    private double hitboxX, hitboxY;
+
     private double vitesse;
+
     private String id;
+
+    private Sommet test;
+
     private boolean vivant;
+
     private IntegerProperty pv;
 
-    public Ennemies(double x, double y, double v, int hp) {
-        this.x = new SimpleDoubleProperty(x);
-        this.y = new SimpleDoubleProperty(y);
+    public Ennemies(Environnement e, double x, double y, double v, int hp) {
+        this.e = e;
+        this.x = new SimpleDoubleProperty(0);
+        this.y = new SimpleDoubleProperty(128);
+        this.hitboxX = getXValues()+31;
+        this.hitboxY = getYValues()+31;
         this.vitesse = v;
         nbEnnemi++;
         this.id="E"+nbEnnemi;
         this.pv= new SimpleIntegerProperty(hp);
         this.vivant = true;
-    }
-
-    public Ennemies(double v, int hp){
-        this.x= new SimpleDoubleProperty(Math.floor(Math.random()*450+50));
-        this.y= new SimpleDoubleProperty(Math.floor(Math.random()*450+50));
-        this.vitesse = v;
-        nbEnnemi++;
-        this.id=""+nbEnnemi;
-        this.pv = new SimpleIntegerProperty(hp);
+        this.test=checkSommet();
     }
 
     public final DoubleProperty getX() {
@@ -81,8 +86,37 @@ public abstract class Ennemies  {
         return ""+this.pv;
     }
 
+    public double getHitboxX() {
+        return hitboxX;
+    }
+
+    public void setHitboxX(double hitboxX) {
+        this.hitboxX = hitboxX;
+    }
+
+    public double getHitboxY() {
+        return hitboxY;
+    }
+
+    public void setHitboxY(double hitboxY) {
+        this.hitboxY = hitboxY;
+    }
+
     public void seDeplace(){
-        SetX( this.getXValues()+this.vitesse);
+        /*SetX( this.getXValues()+this.vitesse);
+        this.setHitboxX(this.getXValues()+31);
+        this.setHitboxY(this.getYValues()+31);
+
+
+         */
+
+        this.SetY(this.e.getBfs().getHashmap().get(this.test).getX()*32);
+        this.SetX(this.e.getBfs().getHashmap().get(this.test).getY()*32);
+        this.test=this.e.getBfs().getHashmap().get(this.test);
+        checkSommet();
+
+
+
     }
 
     public boolean isVivant() {
@@ -94,4 +128,15 @@ public abstract class Ennemies  {
     }
 
     public abstract void prendreDesDgt(int dgt);
+
+    public Sommet checkSommet(){
+        for(Sommet m : this.e.getGraphe().getListeSommet()){
+            if(m.getY()*32 == this.getXValues() && m.getX()*32 == this.getYValues()){
+                return m;
+            }
+        }
+
+        return null;
+    }
+
 }

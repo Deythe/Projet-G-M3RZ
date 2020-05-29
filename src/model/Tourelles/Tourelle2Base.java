@@ -1,12 +1,15 @@
-package model;
+package model.Tourelles;
 
 import javafx.collections.ObservableList;
+import model.Ennemies.Ennemies;
+import model.Environnement;
+import model.Tir;
 
-public class Tourelle2Base extends Tourelles{
+public class Tourelle2Base extends Tourelles {
     private Ennemies cible;
 
     public Tourelle2Base(Environnement e, double x, double y) {
-        super(e, x, y, 10, 96);
+        super(e, x, y, 96);
         this.cible = null;
     }
 
@@ -22,7 +25,7 @@ public class Tourelle2Base extends Tourelles{
             }
         }
         else {
-            if ((this.cible.getXValues() > this.getXValues() + this.getRange() || this.cible.getXValues() < this.getXValues() - this.getRange() || this.cible.getYValues() > this.getYValues() + this.getRange() && this.cible.getYValues() < this.getYValues() - this.getRange())) {
+            if (!this.cible.isVivant() || (this.cible.getXValues() > this.getXValues() + this.getRange() || this.cible.getXValues() < this.getXValues() - this.getRange() || this.cible.getYValues() > this.getYValues() + this.getRange() && this.cible.getYValues() < this.getYValues() - this.getRange())) {
                 this.cible = null;
                 System.out.println("Perdu");
             }
@@ -32,7 +35,7 @@ public class Tourelle2Base extends Tourelles{
     @Override
     public void Tire(){
         if(this.cible!=null){
-            this.getEnvironnement().getTirs().add(new Tir(this.getEnvironnement(), this.cible, this.getXValues(), this.getYValues()));
+            this.getEnvironnement().getTirs().add(new Tir( this.getEnvironnement(), this.cible, this.getXValues(), this.getYValues()));
         }
     }
 }

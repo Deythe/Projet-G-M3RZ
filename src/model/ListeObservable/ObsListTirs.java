@@ -1,9 +1,11 @@
-package model;
+package model.ListeObservable;
 
 import javafx.collections.ListChangeListener;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import model.Tir;
 
 public class ObsListTirs  implements ListChangeListener<Tir> {
 
@@ -28,9 +30,10 @@ public class ObsListTirs  implements ListChangeListener<Tir> {
             }
 
             else if(change.wasRemoved()){
-                for(int i=0; i<this.pane.getChildren().size(); i++){
-                    if(this.pane.getChildren().get(i).getId().equals(change.getRemoved().get(change.getFrom()).getId())){
-                        this.pane.getChildren().remove(i);
+                for(Node c : this.pane.getChildren()){
+                    if(c.getId().equals(change.getRemoved().get(0).getId())){
+                        this.pane.getChildren().remove(c);
+                        break;
                     }
                 }
             }

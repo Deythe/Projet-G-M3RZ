@@ -1,14 +1,13 @@
-package model;
+package model.Ennemies;
+
+import model.Environnement;
 
 public class BananaMan extends Ennemies {
 
-    public BananaMan(double x, double y, double v) {
-        super(x, y, v, 10);
+    public BananaMan(Environnement e, double x, double y, double v) {
+        super(e, x, y, v, 10);
     }
 
-    public BananaMan(double v) {
-        super(v, 50);
-    }
 
     @Override
     public void prendreDesDgt(int dgt){

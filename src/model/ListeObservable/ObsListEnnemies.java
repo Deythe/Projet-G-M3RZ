@@ -1,18 +1,19 @@
-package model;
+package model.ListeObservable;
 
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.util.StringConverter;
+import model.Ennemies.Ennemies;
 import view.ViewEnnemi;
-import view.ViewTourelle;
 
 public class ObsListEnnemies implements ListChangeListener<Ennemies> {
 
     private Pane pane;
+    private ViewEnnemi vE;
 
-    public ObsListEnnemies(Pane p){
+    public ObsListEnnemies(Pane p, ViewEnnemi e){
         this.pane =p;
+        this.vE = e;
     }
 
     @Override
@@ -20,7 +21,7 @@ public class ObsListEnnemies implements ListChangeListener<Ennemies> {
         while(change.next()){
             if(change.wasAdded()){
                 for (int i = 0; i < change.getAddedSubList().size(); i++) {
-                    ViewEnnemi.afficherMob(this.pane, change.getAddedSubList().get(i));
+                    this.vE.afficherMob(change.getAddedSubList().get(i));
                         for(int j=0; j<this.pane.getChildren().size();j++){
                             if (change.getAddedSubList().get(i).getId().equals(this.pane.getChildren().get(j).getId())){
                                 this.pane.getChildren().get(j).translateXProperty().bind(change.getAddedSubList().get(i).getX());
