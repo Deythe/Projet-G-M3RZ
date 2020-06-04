@@ -102,21 +102,46 @@ public abstract class Ennemies  {
         this.hitboxY = hitboxY;
     }
 
+    public double getVitesse() {
+        return vitesse;
+    }
+
+    public void setVitesse(double vitesse) {
+        this.vitesse = vitesse;
+    }
+
+    public Environnement getE() {
+        return e;
+    }
+
     public void seDeplace(){
-        /*SetX( this.getXValues()+this.vitesse);
+        if(this.e.getBfs().getHashmap().get(this.test).getY()>this.test.getY()) {
+            this.SetX(this.getXValues() + this.vitesse);
+        }
+
+        else if(this.e.getBfs().getHashmap().get(this.test).getY()<this.test.getY()) {
+            this.SetX(this.getXValues() - this.vitesse);
+        }
+
+        if(this.e.getBfs().getHashmap().get(this.test).getX()>this.test.getX()) {
+            this.SetY(this.getYValues() + this.vitesse);
+        }
+
+        else if(this.e.getBfs().getHashmap().get(this.test).getX()<this.test.getX()) {
+            this.SetY(this.getYValues() - this.vitesse);
+        }
+
+        if(checkSommet()==this.e.getBfs().getHashmap().get(this.test)){
+            this.test=this.e.getBfs().getHashmap().get(this.test);
+        }
+        /*
+
+        this.SetX(this.e.getBfs().getHashmap().get(this.test).getY()*32);
+
         this.setHitboxX(this.getXValues()+31);
         this.setHitboxY(this.getYValues()+31);
 
-
          */
-
-        this.SetY(this.e.getBfs().getHashmap().get(this.test).getX()*32);
-        this.SetX(this.e.getBfs().getHashmap().get(this.test).getY()*32);
-        this.test=this.e.getBfs().getHashmap().get(this.test);
-        checkSommet();
-
-
-
     }
 
     public boolean isVivant() {
@@ -138,5 +163,7 @@ public abstract class Ennemies  {
 
         return null;
     }
+
+    public abstract void agit();
 
 }

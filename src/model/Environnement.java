@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Ennemies.BananaMan;
 import model.Ennemies.Ennemies;
+import model.Ennemies.Plank;
 import model.Tourelles.Tourelles;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Environnement {
     private Map map;
     private Graphe graphe;
     private BFS bfs;
-    private static int nbTour=0;
+    private int nbTour=0;
 
     public Environnement() {
         this.ennemies = FXCollections.observableArrayList();
@@ -62,6 +63,10 @@ public class Environnement {
         return graphe;
     }
 
+    public int getNbTour() {
+        return nbTour;
+    }
+
     public BFS getBfs() {
         return bfs;
     }
@@ -82,26 +87,23 @@ public class Environnement {
                 return true;
             }
         }
-
         return false;
     }
 
     public void unTour(){
         this.enleverMob();
-        if(nbTour%1000==0){
+
+        if(this.getNbTour()%1000==0){
             System.out.println("Pop");
-            this.ennemies.add(new BananaMan(this, 0,128,0.25));
+            this.ennemies.add(new Plank(this, 128, 0));
         }
 
-        if(nbTour%50==0){
-            for(Tourelles t : this.tourelles){
-                t.Tire();
-            }
+        for (Ennemies n : this.ennemies) {
+            n.agit();
         }
-        if(nbTour%100==0){
-            for(Ennemies a : this.ennemies) {
-                a.seDeplace();
-            }
+
+        for(Tourelles t : this.tourelles){
+            t.Tire();
         }
 
         try {

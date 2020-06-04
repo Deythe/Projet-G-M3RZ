@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Sommet {
-    private double x,y;
+    private int x;
+    private int y;
     private ArrayList<Sommet> adjacents;
 
-    public Sommet(double x, double y) {
+    public Sommet(int x, int y) {
         this.x = x;
         this.y = y;
-        this.adjacents = new ArrayList<>();
+        this.adjacents = new ArrayList<Sommet>();
     }
 
     public boolean estAdjacent(Sommet m){
@@ -57,11 +58,11 @@ public class Sommet {
         this.adjacents.add(a);
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 
@@ -77,6 +78,11 @@ public class Sommet {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Je suis Sommet{" + "x=" + x + ", y=" + y + '}';
     }
 }
 

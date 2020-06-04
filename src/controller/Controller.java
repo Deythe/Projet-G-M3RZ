@@ -16,6 +16,7 @@ import model.ListeObservable.ObsListEnnemies;
 import model.ListeObservable.ObsListTirs;
 import model.ListeObservable.ObsListTourelle;
 import model.Tourelles.Tourelle2Base;
+import model.Tourelles.Tourelle2Slow;
 import model.Tourelles.Tourelles;
 import view.ViewEnnemi;
 import view.ViewMap;
@@ -32,10 +33,15 @@ public class Controller implements Initializable {
 
     private int temps;
 
-    private boolean choix;
+    private boolean choix ;
+
+    private String IDchoix;
 
     @FXML
     private Button T1;
+
+    @FXML
+    private Button T2;
 
     @FXML
     private TilePane Tilepane;
@@ -70,8 +76,7 @@ public class Controller implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-
-                    if(temps==1000){
+                    if(temps==5000){
                         System.out.println("fini");
                         gameLoop.stop();
                     }
@@ -82,7 +87,6 @@ public class Controller implements Initializable {
                             t.checkRange(this.environnement.getEnnemies());
                         }
                     }
-
                     temps++;
                 })
         );
@@ -95,7 +99,13 @@ public class Controller implements Initializable {
             int mouseX = (int) e.getX();
             int mouseY = (int) e.getY();
             if (!this.environnement.existeTourelle(mouseX / 32 * 32, mouseY / 32 * 32) && this.environnement.getMap().quelleCase(mouseX, mouseY)!=0) {
-                this.environnement.getTourelles().add(new Tourelle2Base(this.environnement, mouseX / 32 * 32, mouseY / 32 * 32));
+                if(this.IDchoix.equals(T1.getId())){
+                    this.environnement.getTourelles().add(new Tourelle2Base(this.environnement, mouseX / 32 * 32, mouseY / 32 * 32));
+                }
+                else if(this.IDchoix.equals(T2.getId())){
+                    this.environnement.getTourelles().add(new Tourelle2Slow(this.environnement, mouseX / 32 * 32, mouseY / 32 * 32));
+                }
+
             } else {
                 System.out.println("Vous ne pouvez pas placer de tourelles ici");
             }
@@ -109,11 +119,21 @@ public class Controller implements Initializable {
     public void choisir(ActionEvent e){
         if(this.choix){
             this.choix=false;
-            T1.setStyle("-fx-background-color: grey");
+            T1.setStyle("-fx-background-color: white");
+            T2.setStyle("-fx-background-color: white");
+            this.IDchoix=null;
         }
         else{
             this.choix=true;
-            T1.setStyle("-fx-background-color: red");
+            if(T1.isArmed()){
+                T1.setStyle("-fx-background-color: red");
+                this.IDchoix=T1.getId();
+            }
+
+            else if(T2.isArmed()){
+                T2.setStyle("-fx-background-color: red");
+                this.IDchoix=T2.getId();
+            }
         }
     }
 

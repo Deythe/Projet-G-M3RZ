@@ -7,6 +7,7 @@ import model.Tir;
 
 public class Tourelle2Base extends Tourelles {
     private Ennemies cible;
+    private static int frequenceDeTir = 100;
 
     public Tourelle2Base(Environnement e, double x, double y) {
         super(e, x, y, 96);
@@ -34,8 +35,10 @@ public class Tourelle2Base extends Tourelles {
 
     @Override
     public void Tire(){
-        if(this.cible!=null){
-            this.getEnvironnement().getTirs().add(new Tir( this.getEnvironnement(), this.cible, this.getXValues(), this.getYValues()));
+        if(this.getEnvironnement().getNbTour()%frequenceDeTir==0){
+            if(this.cible!=null){
+                this.getEnvironnement().getTirs().add(new Tir( this.getEnvironnement(), this.cible, this.getXValues(), this.getYValues()));
+            }
         }
     }
 }

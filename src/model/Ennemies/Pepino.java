@@ -2,16 +2,16 @@ package model.Ennemies;
 
 import model.Environnement;
 
-public class BananaMan extends Ennemies {
+public class Pepino extends Ennemies {
+    private int prime;
 
-    public BananaMan(Environnement e, double x, double y) {
-        super(e, x, y, 1, 10);
+    public Pepino(double x, double y, Environnement e){
+        super(e ,x,y,5,5);
+        this.prime=8;
     }
-
 
     @Override
     public void prendreDesDgt(int dgt) {
-        this.setPvValue(this.getPvValue() - dgt);
     }
 
     @Override

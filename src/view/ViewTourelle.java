@@ -19,6 +19,10 @@ public class ViewTourelle {
         if (a instanceof Tourelle2Base) {
             test.setImage(new Image("/images/Platform.png"));
         }
+
+        else if(a instanceof Tourelle2Slow) {
+            test.setImage(new Image("/images/Tourelle2Slow.png"));
+        }
         test.setId(a.getId());
         test.setTranslateX(a.getXValues());
         test.setTranslateY(a.getYValues());

@@ -18,6 +18,15 @@ public class ViewEnnemi {
         if(a instanceof BananaMan){
             test.setImage(new Image("/images/Banana junky.png"));
         }
+
+        else if(a instanceof Plank){
+            test.setImage(new Image("/images/Plank.png"));
+        }
+
+        else if(a instanceof Pepino){
+            test.setImage(new Image("/images/Pepino.png"));
+        }
+
         test.setId(a.getId());
         this.p.getChildren().add(test);
     }

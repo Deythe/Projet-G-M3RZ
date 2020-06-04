@@ -34,6 +34,15 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Button fx:id="T2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#choisir" prefHeight="51.0" prefWidth="43.0">
+                     <graphic>
+                        <ImageView fitHeight="51.0" fitWidth="39.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Tourelle2Slow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </HBox>
          </children>

@@ -31,14 +31,14 @@ public class BFS {
         while(!test.isEmpty()){
             Sommet s = test.removeLast();
             déjaPassé.add(s);
-            for(Sommet adj : s.getAdjacents()){
-                if(!déjaPassé.contains(adj)){
-                    test.addFirst(adj);
-                    this.hashmap.put(adj, s);
+            for(int i=0; i<s.getAdjacents().size(); i++){
+                if(!déjaPassé.contains(s.getAdjacents().get(i))){
+                    test.addFirst(s.getAdjacents().get(i));
+                    déjaPassé.add(s.getAdjacents().get(i));
+                    this.hashmap.put(s.getAdjacents().get(i), s);
                 }
             }
         }
-        System.out.println(this.hashmap);
     }
 
     public HashMap<Sommet, Sommet> getHashmap() {

@@ -12,7 +12,6 @@ public abstract class Tourelles {
     private String id;
     private static int nbTourelle=1;
     private int range;
-    private static int fréquenceDeTir;
 
     public Tourelles(Environnement e, double x, double y, int r) {
         this.environnement =e;
@@ -21,7 +20,6 @@ public abstract class Tourelles {
         this.id = "T"+nbTourelle;
         this.range = r;
         nbTourelle++;
-
     }
 
     public String getId() {

@@ -46,8 +46,9 @@ public class Graphe {
                     this.listeSommet.add(new Sommet(i,j));
                 }
                 else if(this.tableau[i][j]==100){
-                    this.xDépart = j;
-                    this.yDépart = i;
+                    this.listeSommet.add(new Sommet(i,j));
+                    this.xDépart = i;
+                    this.yDépart = j;
                 }
             }
         }
