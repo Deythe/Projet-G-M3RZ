@@ -4,7 +4,7 @@ public class Base {
     private double x,y;
     private int pv;
     boolean estVivant;
-    public Base(double x, double y, int pv){
+    public Base(int pv){
         this.x = x;
         this.y = y;
         this.pv = pv;

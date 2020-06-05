@@ -3,21 +3,27 @@ package view;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import model.BananaMan;
-import model.Ennemi;
 import model.Map;
 
-public class Affichage {
+public class ViewMap {
 
-    public static void affichermap(TilePane t, Map map){
+    private TilePane p;
+
+    public ViewMap(TilePane p) {
+        this.p = p;
+    }
+
+    public void affichermap(Map map){
+        Image image = new Image("/images/tilesetTest.png");
         for(int x=0; x<map.getMap().length; x++){
             for(int y=0; y<map.getMap()[x].length;y++){
-                Image image = new Image("/images/tilesetTest.png");
                 ImageView test = new ImageView();
                 test.setImage(image);
                 switch (map.getMap()[x][y]){
+                    case -1:
+                        test.setViewport(new Rectangle2D(0,0,32,32));
+                        break;
                     case 0:
                         test.setViewport(new Rectangle2D(0,0,32,32));
                         break;
@@ -48,19 +54,31 @@ public class Affichage {
                     case 9:
                         test.setViewport(new Rectangle2D(32,64,32,32));
                         break;
+                    case 17:
+                        test.setViewport(new Rectangle2D(32,128,32,32));
+                        break;
+                    case 20:
+                        test.setViewport(new Rectangle2D(0,160,32,32));
+                        break;
+                    case 21:
+                        test.setViewport(new Rectangle2D(32,160,32,32));
+                        break;
+                    case 22:
+                        test.setViewport(new Rectangle2D(64,160,32,32));
+                        break;
+                    case 24:
+                        test.setViewport(new Rectangle2D(0,192,32,32));
+                        break;
+                    case 25:
+                        test.setViewport(new Rectangle2D(32,192,32,32));
+                        break;
+                    case 100:
+                        test.setViewport(new Rectangle2D(0,0,32,32));
+                        break;
                     default:break;
                 }
-                t.getChildren().add(test);
+                this.p.getChildren().add(test);
             }
         }
-    }
-
-    public static void afficherMob(Pane p, Ennemi a){
-        ImageView test = new ImageView();
-        if(a instanceof BananaMan){
-            test.setImage(new Image("/images/Banana junky.png"));
-        }
-        test.setId(a.getId());
-        p.getChildren().add(test);
     }
 }

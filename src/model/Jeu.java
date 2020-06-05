@@ -2,86 +2,56 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
+import model.Ennemies.BananaMan;
+import model.Ennemies.EnnemIEM;
+import model.Ennemies.Ennemies;
+import model.Tirs.Tir;
+import model.Tourelles.Tourelles;
 
 public class Jeu {
-    private ObservableList<Ennemi> ennemis;
-    private ObservableList<Tourelle> tourelles;
+    private ObservableList<Ennemies> ennemies;
+    private ObservableList<Tourelles> tourelles;
     private ObservableList<Tir> tirs;
     private Map map;
-    private static int nbTours;
-    private Base b;
-    int orJoueur;
+    private Graphe graphe;
+    private Base base;
+    private BFS bfs;
+    private int nbTour=0;
+
     public Jeu() {
-        this.ennemis = FXCollections.observableArrayList();
+        this.ennemies = FXCollections.observableArrayList();
         this.tourelles = FXCollections.observableArrayList();
         this.tirs = FXCollections.observableArrayList();
-        this.map = new Map(b);
+        this.map = new Map();
+        this.graphe = new Graphe( this.map.getMap());
+        this.bfs = new BFS(this.graphe);
+        this.base = new Base(50);
     }
 
-    public static int getNbTours() {
-        return nbTours;
+    public ObservableList<Ennemies> getEnnemies() {
+        return ennemies;
     }
 
-    public static void setNbTours(int nbTours) {
-        Jeu.nbTours = nbTours;
+    public void setEnnemies(ObservableList ennemies) {
+        this.ennemies = ennemies;
     }
 
-    public ObservableList<Ennemi> getEnnemis(){
-        return ennemis;
-    }
-    public Ennemi getEnnenmi(String id){
-        for (int i = 0; i< ennemis.size(); i++){
-            if (ennemis.get(i).getId() == id){
-                return ennemis.get(i);
-            }
-        }
-        return null;
-    }
-
-    public Ennemi getEnnemi(int index){
-        return  this.ennemis.get(index);
-
-    }
-
-    public Tourelle getTourelle(int index){
-        return this.tourelles.get(index);
-    }
-
-    public void incrementerOrJoueur(int montant){
-        this.orJoueur+=montant;
-    }
-
-    public void setEnnemis(ObservableList<Ennemi> ennemis){
-        this.ennemis = ennemis;
-    }
-
-    public ObservableList<Tourelle> getTourelles(){
+    public ObservableList<Tourelles> getTourelles() {
         return tourelles;
     }
 
-    public void unTour(){
-        if (map.getBaseAllie().getPv()<=0){
-            System.out.println("GAME OVER");
-        }
-    }
-
-    public void ajouterEnnemi(Ennemi e){
-        this.ennemis.add(e);
-    }
-    public void setTourelles(ObservableList<Tourelle> tourelles){
+    public void setTourelles(ObservableList<Tourelles> tourelles) {
         this.tourelles = tourelles;
     }
 
-
-    public Map getMap(){
+    public Map getMap() {
         return map;
     }
 
-    public void setMap(Map map){
+    public void setMap(Map map) {
         this.map = map;
     }
+
     public ObservableList<Tir> getTirs() {
         return this.tirs;
     }
@@ -90,9 +60,68 @@ public class Jeu {
         this.tirs = Tir;
     }
 
-    public void Init(){
-        for(int i=0; i<5;i++){
-            this.ennemis.add(new BananaMan(2));
+    public Graphe getGraphe() {
+        return graphe;
+    }
+
+    public int getNbTour() {
+        return nbTour;
+    }
+
+    public BFS getBfs() {
+        return bfs;
+    }
+
+    public Base getBase() {
+        return base;
+    }
+
+    public void enleverMob(){
+        for(int i=0; i<this.ennemies.size(); i++){
+            if(!this.ennemies.get(i).isVivant()){
+                System.out.println("mort");
+                this.ennemies.remove(this.ennemies.get(i));
+            }
         }
     }
+
+
+    public boolean existeTourelle(int x, int y){
+        for(Tourelles t : this.tourelles){
+            if(t.getXValues()==x && t.getYValues()==y){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void unTour(){
+
+        if(this.getNbTour()%2000==0){
+            System.out.println("Pop");
+            this.ennemies.add(new EnnemIEM(this, 0, 128));
+        }
+
+        try {
+            for (Tir t : this.tirs) {
+                t.seDeplace();
+            }
+        }catch (Exception ignored){
+
+        }
+
+        for(int i=0; i<this.ennemies.size(); i++){
+            this.ennemies.get(i).agit();
+        }
+
+        for(Tourelles t : this.tourelles){
+            t.Tire();
+        }
+
+
+        this.enleverMob();
+
+        nbTour++;
+    }
+
 }

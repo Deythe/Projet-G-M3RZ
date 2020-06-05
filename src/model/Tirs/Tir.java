@@ -1,45 +1,29 @@
-package model;
+package model.Tirs;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import model.Jeu;
 
 public abstract class Tir {
-    private Jeu jeu;
-    private int degat;
-    protected Ennemi cible;
-
+    protected Jeu e;
+    private int dgt;
+    private double v;
     private DoubleProperty x;
     private DoubleProperty y;
     private String id;
-    private int v, range;
+
+    private boolean Detruit;
     private static int nbTir;
 
-    public Tir(Jeu j, Ennemi cible, double x, double y, int dégat) {
-        this.jeu=j;
-        this.degat = dégat;
-        this.cible = cible;
+    public Tir(Jeu e, double x, double y, int degat, double vitesse) {
+        this.Detruit =false;
+        this.e=e;
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
-        this.v = 2;
-        this.range=5 ;
         this.id = "Tir :"+nbTir;
+        this.dgt = degat;
+        this.v = vitesse;
         nbTir++;
-    }
-
-    public int getV() {
-        return v;
-    }
-
-    public Jeu getJeu() {
-        return jeu;
-    }
-
-    public int getRange() {
-        return range;
-    }
-
-    public int getDegat() {
-        return degat;
     }
 
     public final DoubleProperty getX() {
@@ -74,9 +58,33 @@ public abstract class Tir {
         this.id = id;
     }
 
+    public boolean EstDetruit() {
+        return Detruit;
+    }
+
+    public void EstDetruit(boolean estDetruit) {
+        this.Detruit = estDetruit;
+    }
+
+    public int getDgt() {
+        return dgt;
+    }
+
+    public void setDgt(int dgt) {
+        this.dgt = dgt;
+    }
+
+    public double getV() {
+        return v;
+    }
+
+    public void setV(double v) {
+        this.v = v;
+    }
+
     public abstract void seDeplace();
 
-    public abstract void touche();
 
+    public abstract void touche();
 
 }
