@@ -36,11 +36,16 @@ public class Tourelle2Base extends Tourelles {
 
     @Override
     public void Tire(){
-        if(this.jeu.getNbTour()%frequenceDeTir==0){
-            if(this.cible!=null){
-                this.jeu.getTirs().add(new Tir2Base( this.getJeu(), this.cible, this.getXValues(), this.getYValues()));
-                //this.jeu.getTirs().add(new Tir2Zone(this.jeu, this.getXValues(), this.getYValues(), this.cible.getXValues(), this.cible.getYValues()));
+        if(this.getTempsInactif()==0){
+            if(this.jeu.getNbTour()%frequenceDeTir==0){
+                if(this.cible!=null){
+                    this.jeu.getTirs().add(new Tir2Base( this.getJeu(), this.cible, this.getXValues(), this.getYValues()));
+                    //this.jeu.getTirs().add(new Tir2Zone(this.jeu, this.getXValues(), this.getYValues(), this.cible.getXValues(), this.cible.getYValues()));
+                }
             }
+        }
+        else{
+            this.setTempsInactif(this.getTempsInactif()-1);
         }
     }
 

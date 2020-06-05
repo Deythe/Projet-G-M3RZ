@@ -97,9 +97,10 @@ public class Jeu {
 
     public void unTour(){
 
-        if(this.getNbTour()%2000==0){
+        if(this.getNbTour()%500==0){
             System.out.println("Pop");
             this.ennemies.add(new EnnemIEM(this, 0, 128));
+            this.ennemies.add(new BananaMan(this, 0, 128));
         }
 
         try {

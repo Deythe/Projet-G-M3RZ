@@ -12,6 +12,7 @@ public abstract class Tourelles {
     private String id;
     private static int nbTourelle=1;
     private int range;
+    private int tempsInactif;
 
     public Tourelles(Jeu e, double x, double y, int r) {
         this.jeu =e;
@@ -19,6 +20,7 @@ public abstract class Tourelles {
         this.y = new SimpleDoubleProperty(y);
         this.id = "T"+nbTourelle;
         this.range = r;
+        this.tempsInactif=0;
         nbTourelle++;
     }
 
@@ -62,6 +64,13 @@ public abstract class Tourelles {
         return y.getValue();
     }
 
+    public int getTempsInactif() {
+        return tempsInactif;
+    }
+
+    public void setTempsInactif(int tempsInactif) {
+        this.tempsInactif = tempsInactif;
+    }
 
     public Jeu getJeu() {
         return jeu;

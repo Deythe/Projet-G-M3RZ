@@ -125,8 +125,9 @@ public class Controller implements Initializable {
     public void choisir(ActionEvent e){
         if(this.choix){
             this.choix=false;
-            T1.setStyle("-fx-background-color: white");
-            T2.setStyle("-fx-background-color: white");
+            T1.setStyle("-fx-background-color: grey");
+            T2.setStyle("-fx-background-color: grey");
+            T3.setStyle("-fx-background-color: grey");
             this.IDchoix=null;
         }
         else{

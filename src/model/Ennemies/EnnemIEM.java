@@ -5,10 +5,12 @@ import model.Tourelles.Tourelles;
 
 public class EnnemIEM  extends Ennemies {
 
-    private static final int TEMPSIEM = 10000;
+    private static final int TEMPSIEM = 200;
+    private int range;
 
     public EnnemIEM(Jeu j, double x, double y) {
-        super(j, x, y, 2, 10);
+        super(j, x, y, 4, 10);
+        this.range = 96;
     }
 
     @Override
@@ -21,23 +23,22 @@ public class EnnemIEM  extends Ennemies {
     }
 
     public void iem() {
-       /* for(Tourelles t : super.e.getTourelles()) {
-            if(t.getXValues() - this.getXValues() <= (5 * 32) && t.getYValues() - this.getYValues() >= (-5 * 32)) {
-                if(t.getYValues() - this.getYValues() <= (5 * 32) && t.getYValues() - this.getYValues() >= (-5 * 32)) {
+       for(Tourelles t : super.e.getTourelles()) {
+           if(t.getXValues() - this.getXValues() <= this.range && t.getXValues() - this.getXValues() >= -this.range) {
+                if(t.getYValues() - this.getYValues() <= this.range && t.getYValues() - this.getYValues() >= -this.range) {
                     t.setTempsInactif(TEMPSIEM);
                 }
             }
         }
 
-        */
+
     }
 
     public void agit() {
+        this.seDeplace();
         if(!this.isVivant()) {
             System.out.println("IEM Activé");
             this.iem();
         }
-        this.seDeplace();
-        //System.out.println(this.getPvValue());
     }
 }
