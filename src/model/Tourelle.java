@@ -1,7 +1,8 @@
 package model;
 
-public abstract class Tourelle {
+import javafx.collections.ObservableList;
 
+public abstract class Tourelle {
 
     public static void setNbTourelle(int nbTourelle) {
         Tourelle.nbTourelle = nbTourelle;
@@ -12,11 +13,13 @@ public abstract class Tourelle {
     private static int nbTourelle=0;
     protected Jeu jeu;
     private int tempsInactif;
-    public Tourelle(double x, double y, Jeu j) {
+    private int range;
+    public Tourelle(double x, double y, Jeu j, int r) {
         this.x = x;
         this.y = y;
         this.id = "t"+nbTourelle;
         this.jeu=j;
+        this.range=r;
         this.tempsInactif=0;
     }
 
@@ -26,6 +29,10 @@ public abstract class Tourelle {
         }return false;
     }
     public abstract void agit();
+
+    public abstract void Tire();
+
+    public abstract void checkRange(ObservableList<Ennemi> e);
 
     public int getTempsInactif(){
         return this.tempsInactif;
@@ -39,7 +46,8 @@ public abstract class Tourelle {
             this.tempsInactif-=montant;
         }else this.setTempsInactif(0);
     }
-    public double getX() {
+
+    public double getXValues() {
         return x;
     }
 
@@ -47,7 +55,7 @@ public abstract class Tourelle {
         this.x = x;
     }
 
-    public double getY() {
+    public double getYValues() {
         return y;
     }
 
@@ -65,6 +73,14 @@ public abstract class Tourelle {
 
     public static int getNbTourelle() {
         return nbTourelle;
+    }
+
+    public Jeu getJeu(){
+        return this.jeu;
+    }
+
+    public int getRange(){
+        return this.range;
     }
 
 }

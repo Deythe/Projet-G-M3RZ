@@ -12,6 +12,11 @@ public Carrambo(double x, double y,Jeu j){
         seDeplacer();
     }
 
+    @Override
+    public void prendreDesDgt(int dgt) {
+
+    }
+
     public int getPrime(){
     return this.prime;
     }

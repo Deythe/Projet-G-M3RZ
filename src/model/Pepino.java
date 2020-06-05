@@ -12,4 +12,9 @@ public class Pepino extends Ennemi {
     public void agit() {
         seDeplacer();
     }
+
+    @Override
+    public void prendreDesDgt(int dgt) {
+
+    }
 }

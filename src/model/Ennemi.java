@@ -36,11 +36,14 @@ public abstract class Ennemi {
     public void decrementerPv(int a){
         this.pv-=a;
     }
+
     public abstract void agit();
 
     public void kamikaze(){
 
     }
+
+    public abstract void prendreDesDgt(int dgt);
 
     public int getPv(){
         return this.pv;

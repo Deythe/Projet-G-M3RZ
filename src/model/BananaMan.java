@@ -15,4 +15,9 @@ public class BananaMan extends Ennemi {
 
     }
 
+    @Override
+    public void prendreDesDgt(int dgt) {
+
+    }
+
 }

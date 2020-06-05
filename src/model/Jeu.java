@@ -1,21 +1,34 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class Jeu {
-    private ArrayList<Ennemi> ennemis;
-    private ArrayList<Tourelle> tourelles;
+    private ObservableList<Ennemi> ennemis;
+    private ObservableList<Tourelle> tourelles;
+    private ObservableList<Tir> tirs;
     private Map map;
-    int temps;
-    Base b;
+    private static int nbTours;
+    private Base b;
     int orJoueur;
     public Jeu() {
-        this.ennemis = new ArrayList<>();
-        this.tourelles = new ArrayList<>();
+        this.ennemis = FXCollections.observableArrayList();
+        this.tourelles = FXCollections.observableArrayList();
+        this.tirs = FXCollections.observableArrayList();
         this.map = new Map(b);
     }
 
-    public ArrayList<Ennemi> getEnnemis(){
+    public static int getNbTours() {
+        return nbTours;
+    }
+
+    public static void setNbTours(int nbTours) {
+        Jeu.nbTours = nbTours;
+    }
+
+    public ObservableList<Ennemi> getEnnemis(){
         return ennemis;
     }
     public Ennemi getEnnenmi(String id){
@@ -40,11 +53,11 @@ public class Jeu {
         this.orJoueur+=montant;
     }
 
-    public void setEnnemis(ArrayList<Ennemi> ennemis){
+    public void setEnnemis(ObservableList<Ennemi> ennemis){
         this.ennemis = ennemis;
     }
 
-    public ArrayList<Tourelle> getTourelles(){
+    public ObservableList<Tourelle> getTourelles(){
         return tourelles;
     }
 
@@ -57,7 +70,7 @@ public class Jeu {
     public void ajouterEnnemi(Ennemi e){
         this.ennemis.add(e);
     }
-    public void setTourelles(ArrayList<Tourelle> tourelles){
+    public void setTourelles(ObservableList<Tourelle> tourelles){
         this.tourelles = tourelles;
     }
 
@@ -68,6 +81,13 @@ public class Jeu {
 
     public void setMap(Map map){
         this.map = map;
+    }
+    public ObservableList<Tir> getTirs() {
+        return this.tirs;
+    }
+
+    public void setTirs(ObservableList Tir) {
+        this.tirs = Tir;
     }
 
     public void Init(){

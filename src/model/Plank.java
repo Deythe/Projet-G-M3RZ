@@ -9,8 +9,13 @@ public class Plank extends Ennemi {
 
     @Override
     public void agit() {
-        seDeplacer();
-        largage();
+        this.seDeplacer();
+        this.largage();
+    }
+
+    @Override
+    public void prendreDesDgt(int dgt) {
+
     }
 
     public int getPrime() {
@@ -21,7 +26,7 @@ public class Plank extends Ennemi {
 
         if (!this.estVivant()) {
             for (int i = 0; i < 4; i++) {
-                Ennemi e = new Pepino(this.getXValues()+2, this.getYValues()+2,this.jeu);
+                Ennemi e = new Pepino(this.getXValues(), this.getYValues(),this.jeu);
                 this.jeu.ajouterEnnemi(e);
             }
         }
