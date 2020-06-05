@@ -27,6 +27,10 @@ public class ViewEnnemi {
             test.setImage(new Image("/images/Pepino.png"));
         }
 
+        else if(a instanceof EnnemIEM){
+            test.setImage(new Image("/images/Patatos.png"));
+        }
+
         test.setId(a.getId());
         this.p.getChildren().add(test);
     }

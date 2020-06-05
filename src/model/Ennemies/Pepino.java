@@ -1,13 +1,12 @@
 package model.Ennemies;
 
-import model.Environnement;
+import model.Jeu;
 
 public class Pepino extends Ennemies {
     private int prime;
 
-    public Pepino(double x, double y, Environnement e){
-        super(e ,x,y,5,5);
-        this.prime=8;
+    public Pepino(Jeu e, double x, double y){
+        super(e , x, y,1,5);
     }
 
     @Override
@@ -17,5 +16,6 @@ public class Pepino extends Ennemies {
     @Override
     public void agit() {
         this.seDeplace();
+        System.out.println(this.checkSommet());
     }
 }

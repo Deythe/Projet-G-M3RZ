@@ -3,28 +3,29 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Ennemies.BananaMan;
+import model.Ennemies.EnnemIEM;
 import model.Ennemies.Ennemies;
-import model.Ennemies.Plank;
+import model.Tirs.Tir;
 import model.Tourelles.Tourelles;
 
-import java.util.ArrayList;
-
-public class Environnement {
+public class Jeu {
     private ObservableList<Ennemies> ennemies;
     private ObservableList<Tourelles> tourelles;
     private ObservableList<Tir> tirs;
     private Map map;
     private Graphe graphe;
+    private Base base;
     private BFS bfs;
     private int nbTour=0;
 
-    public Environnement() {
+    public Jeu() {
         this.ennemies = FXCollections.observableArrayList();
         this.tourelles = FXCollections.observableArrayList();
         this.tirs = FXCollections.observableArrayList();
         this.map = new Map();
         this.graphe = new Graphe( this.map.getMap());
         this.bfs = new BFS(this.graphe);
+        this.base = new Base(50);
     }
 
     public ObservableList<Ennemies> getEnnemies() {
@@ -71,6 +72,10 @@ public class Environnement {
         return bfs;
     }
 
+    public Base getBase() {
+        return base;
+    }
+
     public void enleverMob(){
         for(int i=0; i<this.ennemies.size(); i++){
             if(!this.ennemies.get(i).isVivant()){
@@ -91,19 +96,11 @@ public class Environnement {
     }
 
     public void unTour(){
-        this.enleverMob();
 
-        if(this.getNbTour()%1000==0){
+        if(this.getNbTour()%500==0){
             System.out.println("Pop");
-            this.ennemies.add(new Plank(this, 128, 0));
-        }
-
-        for (Ennemies n : this.ennemies) {
-            n.agit();
-        }
-
-        for(Tourelles t : this.tourelles){
-            t.Tire();
+            this.ennemies.add(new EnnemIEM(this, 0, 128));
+            this.ennemies.add(new BananaMan(this, 0, 128));
         }
 
         try {
@@ -113,6 +110,17 @@ public class Environnement {
         }catch (Exception ignored){
 
         }
+
+        for(int i=0; i<this.ennemies.size(); i++){
+            this.ennemies.get(i).agit();
+        }
+
+        for(Tourelles t : this.tourelles){
+            t.Tire();
+        }
+
+
+        this.enleverMob();
 
         nbTour++;
     }

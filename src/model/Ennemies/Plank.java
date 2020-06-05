@@ -1,20 +1,29 @@
 package model.Ennemies;
 
-import model.Environnement;
+import model.Jeu;
 
 public class Plank extends Ennemies {
     private int prime;
+    private boolean planté;
 
-    public Plank(Environnement e, double x, double y){
-        super(e,x,y,0.25,10);
-        this.prime=25;
+    public Plank(Jeu e, double x, double y){
+        super(e,x,y,7,10);
+        this.planté = false;
     }
 
     @Override
     public void agit() {
-        this.seDeplace();
-        if(!this.estVivant()){
-             this.largage();
+        if(!this.isVivant() && !this.planté){
+            this.planté=true;
+            this.setPvValue(20);
+        }
+
+        if(!planté){
+            this.seDeplace();
+        }
+
+        else{
+            largage();
         }
 
     }
@@ -24,20 +33,10 @@ public class Plank extends Ennemies {
         this.setPvValue(this.getPvValue() - dgt);
     }
 
-    public int getPrime() {
-        return prime;
-    }
-
     public void largage(){
-        for (int i = 0; i < 4; i++) {
-            Ennemies e = new Pepino(this.getXValues(), this.getYValues(), this.getE());
-            super.getE().getEnnemies().add(e);
+        if (this.e.getNbTour() % 100 == 0) {
+            this.e.getEnnemies().add(new Pepino(this.e, (int)this.getXValues()/32*32, (int)this.getYValues()/32*32));
+            System.out.println("pop");
         }
-    }
-
-    public boolean estVivant(){
-        if (this.getPvValue()>=0){
-            return true;
-        }else return false;
     }
 }

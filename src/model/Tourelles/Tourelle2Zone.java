@@ -6,11 +6,11 @@ import model.Jeu;
 import model.Tirs.Tir2Base;
 import model.Tirs.Tir2Zone;
 
-public class Tourelle2Base extends Tourelles {
+public class Tourelle2Zone extends Tourelles {
     private Ennemies cible;
     private static int frequenceDeTir = 100;
 
-    public Tourelle2Base(Jeu e, double x, double y) {
+    public Tourelle2Zone(Jeu e, double x, double y) {
         super(e, x, y, 96);
         this.cible = null;
     }
@@ -36,16 +36,11 @@ public class Tourelle2Base extends Tourelles {
 
     @Override
     public void Tire(){
-        if(this.getTempsInactif()==0){
-            if(this.jeu.getNbTour()%frequenceDeTir==0){
-                if(this.cible!=null){
-                    this.jeu.getTirs().add(new Tir2Base( this.getJeu(), this.cible, this.getXValues(), this.getYValues()));
-                    //this.jeu.getTirs().add(new Tir2Zone(this.jeu, this.getXValues(), this.getYValues(), this.cible.getXValues(), this.cible.getYValues()));
-                }
+        if(this.jeu.getNbTour()%frequenceDeTir==0){
+            if(this.cible!=null){
+                this.jeu.getTirs().add(new Tir2Zone(this.jeu, this.getXValues(), this.getYValues(), this.cible.getXValues(), this.cible.getYValues()));
+                this.cible=null;
             }
-        }
-        else{
-            this.setTempsInactif(this.getTempsInactif()-1);
         }
     }
 

@@ -1,11 +1,11 @@
 package model.Ennemies;
 
-import model.Environnement;
+import model.Jeu;
 
 public class BananaMan extends Ennemies {
 
-    public BananaMan(Environnement e, double x, double y) {
-        super(e, x, y, 1, 10);
+    public BananaMan(Jeu e, double x, double y) {
+        super(e, x, y, 2, 10);
     }
 
 

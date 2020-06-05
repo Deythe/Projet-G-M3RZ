@@ -5,7 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import model.Tir;
+import model.Tirs.Tir;
+import model.Tirs.Tir2Base;
+import model.Tirs.Tir2Zone;
 
 public class ObsListTirs  implements ListChangeListener<Tir> {
 
@@ -20,8 +22,18 @@ public class ObsListTirs  implements ListChangeListener<Tir> {
         while(change.next()) {
             if (change.wasAdded()) {
                 for(int i=0; i<change.getAddedSubList().size(); i++){
-                    Circle r = new Circle(2);
-                    r.setFill(Color.RED);
+                    Circle r = new Circle();
+
+                    if(change.getAddedSubList().get(i) instanceof Tir2Base){
+                        r.setRadius(2);
+                        r.setFill(Color.RED);
+                    }
+
+                    else if(change.getAddedSubList().get(i) instanceof Tir2Zone) {
+                        r.setRadius(4);
+                        r.setFill(Color.PINK);
+                    }
+
                     r.translateXProperty().bind(change.getAddedSubList().get(i).getX());
                     r.translateYProperty().bind(change.getAddedSubList().get(i).getY());
                     r.setId(change.getAddedSubList().get(i).getId());

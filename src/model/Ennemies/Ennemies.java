@@ -4,11 +4,11 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import model.Environnement;
+import model.Jeu;
 import model.Sommet;
 
 public abstract class Ennemies  {
-    private Environnement e;
+    protected Jeu e;
     private static int nbEnnemi = 1;
 
     private DoubleProperty x,y;
@@ -18,23 +18,23 @@ public abstract class Ennemies  {
 
     private String id;
 
-    private Sommet test;
+    private boolean ralentit;
 
-    private boolean vivant;
+    private Sommet test;
 
     private IntegerProperty pv;
 
-    public Ennemies(Environnement e, double x, double y, double v, int hp) {
+    public Ennemies(Jeu e, double x, double y, double v, int hp) {
         this.e = e;
-        this.x = new SimpleDoubleProperty(0);
-        this.y = new SimpleDoubleProperty(128);
+        this.ralentit = false;
+        this.x = new SimpleDoubleProperty(x);
+        this.y = new SimpleDoubleProperty(y);
         this.hitboxX = getXValues()+31;
         this.hitboxY = getYValues()+31;
         this.vitesse = v;
         nbEnnemi++;
         this.id="E"+nbEnnemi;
         this.pv= new SimpleIntegerProperty(hp);
-        this.vivant = true;
         this.test=checkSommet();
     }
 
@@ -106,50 +106,50 @@ public abstract class Ennemies  {
         return vitesse;
     }
 
+    public boolean isRalentit() {
+        return ralentit;
+    }
+
+    public void setRalentit(boolean ralentit) {
+        this.ralentit = ralentit;
+    }
+
     public void setVitesse(double vitesse) {
         this.vitesse = vitesse;
     }
 
-    public Environnement getE() {
-        return e;
-    }
 
     public void seDeplace(){
-        if(this.e.getBfs().getHashmap().get(this.test).getY()>this.test.getY()) {
-            this.SetX(this.getXValues() + this.vitesse);
+        if(this.e.getNbTour()%this.vitesse==0) {
+            if (this.e.getBfs().getHashmap().get(this.test) == null) {
+                this.e.getBase().decrementerPv(2);
+                this.e.getEnnemies().remove(this);
+                System.out.println(this.e.getBase().getPv());
+            } else {
+                if (this.e.getBfs().getHashmap().get(this.test).getY() > this.test.getY()) {
+                    this.SetX(this.getXValues() + 1);
+                } else if (this.e.getBfs().getHashmap().get(this.test).getY() < this.test.getY()) {
+                    this.SetX(this.getXValues() - 1);
+                }
+
+                if (this.e.getBfs().getHashmap().get(this.test).getX() > this.test.getX()) {
+                    this.SetY(this.getYValues() + 1);
+                } else if (this.e.getBfs().getHashmap().get(this.test).getX() < this.test.getX()) {
+                    this.SetY(this.getYValues() - 1);
+                }
+
+                if (checkSommet() == this.e.getBfs().getHashmap().get(this.test)) {
+                    this.test = this.e.getBfs().getHashmap().get(this.test);
+                }
+
+                this.setHitboxX(this.getXValues() + 31);
+                this.setHitboxY(this.getYValues() + 31);
+            }
         }
-
-        else if(this.e.getBfs().getHashmap().get(this.test).getY()<this.test.getY()) {
-            this.SetX(this.getXValues() - this.vitesse);
-        }
-
-        if(this.e.getBfs().getHashmap().get(this.test).getX()>this.test.getX()) {
-            this.SetY(this.getYValues() + this.vitesse);
-        }
-
-        else if(this.e.getBfs().getHashmap().get(this.test).getX()<this.test.getX()) {
-            this.SetY(this.getYValues() - this.vitesse);
-        }
-
-        if(checkSommet()==this.e.getBfs().getHashmap().get(this.test)){
-            this.test=this.e.getBfs().getHashmap().get(this.test);
-        }
-        /*
-
-        this.SetX(this.e.getBfs().getHashmap().get(this.test).getY()*32);
-
-        this.setHitboxX(this.getXValues()+31);
-        this.setHitboxY(this.getYValues()+31);
-
-         */
     }
 
     public boolean isVivant() {
         return this.getPvValue()>0;
-    }
-
-    public void setVivant(boolean vivant) {
-        this.vivant = vivant;
     }
 
     public abstract void prendreDesDgt(int dgt);

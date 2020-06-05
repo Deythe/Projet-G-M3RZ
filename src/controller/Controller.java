@@ -11,12 +11,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import model.*;
-import model.Ennemies.BananaMan;
 import model.ListeObservable.ObsListEnnemies;
 import model.ListeObservable.ObsListTirs;
 import model.ListeObservable.ObsListTourelle;
 import model.Tourelles.Tourelle2Base;
 import model.Tourelles.Tourelle2Slow;
+import model.Tourelles.Tourelle2Zone;
 import model.Tourelles.Tourelles;
 import view.ViewEnnemi;
 import view.ViewMap;
@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-    private Environnement environnement;
+    private Jeu jeu;
 
     private Timeline gameLoop;
 
@@ -44,6 +44,9 @@ public class Controller implements Initializable {
     private Button T2;
 
     @FXML
+    private Button T3;
+
+    @FXML
     private TilePane Tilepane;
 
     @FXML
@@ -52,16 +55,16 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.environnement = new Environnement();
+        this.jeu = new Jeu();
         //this.environnement.getGraphe().creationDuGraphe();
         this.choix=false;
         ViewEnnemi viewEnnemi = new ViewEnnemi(this.pane);
         ViewTourelle viewTourelle = new ViewTourelle(this.pane);
         ViewMap viewMap = new ViewMap(this.Tilepane);
-        viewMap.affichermap(this.environnement.getMap());
-        this.environnement.getTourelles().addListener(new ObsListTourelle(this.pane, viewTourelle));
-        this.environnement.getEnnemies().addListener(new ObsListEnnemies(this.pane, viewEnnemi));
-        this.environnement.getTirs().addListener(new ObsListTirs(this.pane));
+        viewMap.affichermap(this.jeu.getMap());
+        this.jeu.getTourelles().addListener(new ObsListTourelle(this.pane, viewTourelle));
+        this.jeu.getEnnemies().addListener(new ObsListEnnemies(this.pane, viewEnnemi));
+        this.jeu.getTirs().addListener(new ObsListTirs(this.pane));
         initAnimation();
     }
 
@@ -82,9 +85,9 @@ public class Controller implements Initializable {
                     }
 
                     if(temps%1==0){
-                        this.environnement.unTour();
-                        for(Tourelles t : this.environnement.getTourelles()){
-                            t.checkRange(this.environnement.getEnnemies());
+                        this.jeu.unTour();
+                        for(Tourelles t : this.jeu.getTourelles()){
+                            t.checkRange(this.jeu.getEnnemies());
                         }
                     }
                     temps++;
@@ -98,12 +101,15 @@ public class Controller implements Initializable {
         if(this.choix) {
             int mouseX = (int) e.getX();
             int mouseY = (int) e.getY();
-            if (!this.environnement.existeTourelle(mouseX / 32 * 32, mouseY / 32 * 32) && this.environnement.getMap().quelleCase(mouseX, mouseY)!=0) {
+            if (!this.jeu.existeTourelle(mouseX / 32 * 32, mouseY / 32 * 32) && this.jeu.getMap().quelleCase(mouseX, mouseY)!=0) {
                 if(this.IDchoix.equals(T1.getId())){
-                    this.environnement.getTourelles().add(new Tourelle2Base(this.environnement, mouseX / 32 * 32, mouseY / 32 * 32));
+                    this.jeu.getTourelles().add(new Tourelle2Base(this.jeu, mouseX / 32 * 32, mouseY / 32 * 32));
                 }
                 else if(this.IDchoix.equals(T2.getId())){
-                    this.environnement.getTourelles().add(new Tourelle2Slow(this.environnement, mouseX / 32 * 32, mouseY / 32 * 32));
+                    this.jeu.getTourelles().add(new Tourelle2Slow(this.jeu, mouseX / 32 * 32, mouseY / 32 * 32));
+                }
+                else if(this.IDchoix.equals(T3.getId())){
+                    this.jeu.getTourelles().add(new Tourelle2Zone(this.jeu, mouseX / 32 * 32, mouseY / 32 * 32));
                 }
 
             } else {
@@ -119,8 +125,9 @@ public class Controller implements Initializable {
     public void choisir(ActionEvent e){
         if(this.choix){
             this.choix=false;
-            T1.setStyle("-fx-background-color: white");
-            T2.setStyle("-fx-background-color: white");
+            T1.setStyle("-fx-background-color: grey");
+            T2.setStyle("-fx-background-color: grey");
+            T3.setStyle("-fx-background-color: grey");
             this.IDchoix=null;
         }
         else{
@@ -133,6 +140,11 @@ public class Controller implements Initializable {
             else if(T2.isArmed()){
                 T2.setStyle("-fx-background-color: red");
                 this.IDchoix=T2.getId();
+            }
+
+            else if(T3.isArmed()){
+                T3.setStyle("-fx-background-color: red");
+                this.IDchoix=T3.getId();
             }
         }
     }
