@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import model.Ennemies.BananaMan;
 import model.Ennemies.EnnemIEM;
 import model.Ennemies.Ennemies;
+import model.Ennemies.Plank;
 import model.Tirs.Tir;
 import model.Tourelles.Tourelles;
 
@@ -97,9 +98,8 @@ public class Jeu {
 
     public void unTour(){
 
-        if(this.getNbTour()%500==0){
+        if(this.getNbTour()%100==0){
             System.out.println("Pop");
-            this.ennemies.add(new EnnemIEM(this, 0, 128));
             this.ennemies.add(new BananaMan(this, 0, 128));
         }
 
@@ -113,14 +113,12 @@ public class Jeu {
 
         for(int i=0; i<this.ennemies.size(); i++){
             this.ennemies.get(i).agit();
+            this.enleverMob();
         }
 
         for(Tourelles t : this.tourelles){
             t.Tire();
         }
-
-
-        this.enleverMob();
 
         nbTour++;
     }

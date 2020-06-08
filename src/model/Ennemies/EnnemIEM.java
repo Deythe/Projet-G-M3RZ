@@ -6,10 +6,12 @@ import model.Tourelles.Tourelles;
 public class EnnemIEM  extends Ennemies {
 
     private static final int TEMPSIEM = 200;
+    private static final int vitesse = 4;
+
     private int range;
 
     public EnnemIEM(Jeu j, double x, double y) {
-        super(j, x, y, 4, 10);
+        super(j, x, y, vitesse, 10);
         this.range = 96;
     }
 

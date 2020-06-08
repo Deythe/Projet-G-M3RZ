@@ -4,8 +4,10 @@ import model.Jeu;
 
 public class BananaMan extends Ennemies {
 
+    private static final int vitesse = 2;
+
     public BananaMan(Jeu e, double x, double y) {
-        super(e, x, y, 2, 10);
+        super(e, x, y, vitesse, 10);
     }
 
 

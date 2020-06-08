@@ -41,6 +41,7 @@ public class Tir2Zone extends Tir {
     @Override
     public void touche() {
         if (this.getXValues() == this.FinX && this.getYValues() == this.FinY) {
+            System.out.println("touché");
             for(int i=0; i<this.e.getEnnemies().size(); i++){
                 if(this.e.getEnnemies().get(i).getXValues()-this.FinX <=this.range && this.e.getEnnemies().get(0).getHitboxX()-this.FinX <=this.range && this.e.getEnnemies().get(0).getYValues()-this.FinY <=this.range && this.e.getEnnemies().get(0).getHitboxY()-this.FinY <=this.range){
                     this.e.getEnnemies().get(i).prendreDesDgt(this.getDgt());

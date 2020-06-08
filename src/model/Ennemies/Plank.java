@@ -5,9 +5,10 @@ import model.Jeu;
 public class Plank extends Ennemies {
     private int prime;
     private boolean planté;
+    private static final int vitesse = 7;
 
     public Plank(Jeu e, double x, double y){
-        super(e,x,y,7,10);
+        super(e,x,y,vitesse,10);
         this.planté = false;
     }
 

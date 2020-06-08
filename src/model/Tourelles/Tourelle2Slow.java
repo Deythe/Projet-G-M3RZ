@@ -27,7 +27,7 @@ public class Tourelle2Slow extends Tourelles {
             else{
                 for(Ennemies p : this.cibles){
                     if (!p.isVivant() || !this.detectionEnnemie(p)){
-                        n.setVitesse(1);
+                        n.setVitesse(n.getVitesse()/2);
                         n.setRalentit(false);
                         this.cibles.remove(n);
                         System.out.println("Perdu");
