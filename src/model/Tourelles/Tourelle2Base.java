@@ -9,10 +9,15 @@ import model.Tirs.Tir2Zone;
 public class Tourelle2Base extends Tourelles {
     private Ennemies cible;
     private static int frequenceDeTir = 100;
+    private static int valeur = 100;
 
     public Tourelle2Base(Jeu e, double x, double y) {
         super(e, x, y, 96);
         this.cible = null;
+    }
+
+    public static int getValeur() {
+        return valeur;
     }
 
     @Override
@@ -39,7 +44,7 @@ public class Tourelle2Base extends Tourelles {
         if(this.getTempsInactif()==0){
             if(this.jeu.getNbTour()%frequenceDeTir==0){
                 if(this.cible!=null){
-                    this.jeu.getTirs().add(new Tir2Base( this.getJeu(), this.cible, this.getXValues(), this.getYValues()));
+                    this.jeu.getTirs().add(new Tir2Base( this.getJeu(), this.cible, this.getX(), this.getY()));
                     //this.jeu.getTirs().add(new Tir2Zone(this.jeu, this.getXValues(), this.getYValues(), this.cible.getXValues(), this.cible.getYValues()));
                 }
             }
@@ -47,15 +52,5 @@ public class Tourelle2Base extends Tourelles {
         else{
             this.setTempsInactif(this.getTempsInactif()-1);
         }
-    }
-
-    @Override
-    public boolean detectionEnnemie(Ennemies a) {
-        if ((a.getXValues() < this.getXValues() + this.getRange() && a.getXValues() > this.getXValues() - this.getRange()) && (a.getYValues() < this.getYValues() + this.getRange() && a.getYValues() > this.getYValues() - this.getRange())) {
-            return true;
-        } else {
-            return false;
-        }
-
     }
 }

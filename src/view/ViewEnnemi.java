@@ -15,8 +15,8 @@ public class ViewEnnemi {
 
     public void afficherMob(Ennemies a){
         ImageView test = new ImageView();
-        if(a instanceof BananaMan){
-            test.setImage(new Image("/images/Banana junky.png"));
+        if(a instanceof Carambo){
+            test.setImage(new Image("/images/Karambo.gif"));
         }
 
         else if(a instanceof Plank){

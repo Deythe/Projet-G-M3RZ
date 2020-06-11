@@ -8,7 +8,7 @@ import model.Jeu;
 
 public abstract class Tourelles {
     protected Jeu jeu;
-    private DoubleProperty x,y;
+    private double x,y;
     private String id;
     private static int nbTourelle=1;
     private int range;
@@ -16,8 +16,8 @@ public abstract class Tourelles {
 
     public Tourelles(Jeu e, double x, double y, int r) {
         this.jeu =e;
-        this.x = new SimpleDoubleProperty(x);
-        this.y = new SimpleDoubleProperty(y);
+        this.x = x;
+        this.y = y;
         this.id = "T"+nbTourelle;
         this.range = r;
         this.tempsInactif=0;
@@ -40,28 +40,21 @@ public abstract class Tourelles {
         this.range = range;
     }
 
-    public final DoubleProperty getX() {
+    public double getX() {
         return x;
     }
 
     public final void SetX(double d){
-        this.x.set(d);
+        this.x = d;
     }
 
-    public final double getXValues(){
-        return x.getValue();
-    }
 
-    public final DoubleProperty getY() {
+    public double getY() {
         return y;
     }
 
     public final void SetY(double d){
-        this.y.set(d);
-    }
-
-    public final double getYValues(){
-        return y.getValue();
+        this.y = d;
     }
 
     public int getTempsInactif() {
@@ -84,5 +77,12 @@ public abstract class Tourelles {
 
     public abstract void Tire();
 
-    public abstract boolean detectionEnnemie(Ennemies a);
+    public boolean detectionEnnemie(Ennemies a) {
+        if ((a.getXValues() < this.x + this.getRange() && a.getXValues() > this.x - this.getRange()) && (a.getYValues() < this.y + this.getRange() && a.getYValues() > this.y - this.getRange())) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

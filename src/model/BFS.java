@@ -25,15 +25,15 @@ public class BFS {
     }
 
     public void créationBFS(){
-        LinkedList<Sommet> test = new LinkedList<>();
+        LinkedList<Sommet> file = new LinkedList<>();
         ArrayList<Sommet> déjaPassé = new ArrayList<>();
-        test.addFirst(this.début);
-        while(!test.isEmpty()){
-            Sommet s = test.removeLast();
-            déjaPassé.add(s);
+        file.addFirst(this.début);
+        déjaPassé.add(this.début);
+        while(!file.isEmpty()){
+            Sommet s = file.removeLast();
             for(int i=0; i<s.getAdjacents().size(); i++){
                 if(!déjaPassé.contains(s.getAdjacents().get(i))){
-                    test.addFirst(s.getAdjacents().get(i));
+                    file.addFirst(s.getAdjacents().get(i));
                     déjaPassé.add(s.getAdjacents().get(i));
                     this.hashmap.put(s.getAdjacents().get(i), s);
                 }

@@ -20,11 +20,13 @@ public abstract class Ennemies  {
 
     private boolean ralentit;
 
-    private Sommet test;
+    private Sommet sommetActu;
 
     private IntegerProperty pv;
 
-    public Ennemies(Jeu e, double x, double y, double v, int hp) {
+    private int prime;
+
+    public Ennemies(Jeu e, double x, double y, double v, int hp, int p) {
         this.e = e;
         this.ralentit = false;
         this.x = new SimpleDoubleProperty(x);
@@ -32,10 +34,11 @@ public abstract class Ennemies  {
         this.hitboxX = getXValues()+31;
         this.hitboxY = getYValues()+31;
         this.vitesse = v;
+        this.prime = p;
         nbEnnemi++;
         this.id="E"+nbEnnemi;
         this.pv= new SimpleIntegerProperty(hp);
-        this.test=checkSommet();
+        this.sommetActu =checkSommet();
     }
 
     public final DoubleProperty getX() {
@@ -118,28 +121,45 @@ public abstract class Ennemies  {
         this.vitesse = vitesse;
     }
 
+    public Sommet getSommetActu() {
+        return sommetActu;
+    }
+
+    public void setSommetActu(Sommet sommetActu) {
+        this.sommetActu = sommetActu;
+    }
+
+    public abstract int getVitesseDeBase();
+
+    public int getPrime() {
+        return prime;
+    }
+
+    public void setPrime(int prime) {
+        this.prime = prime;
+    }
 
     public void seDeplace(){
         if(this.e.getNbTour()%this.vitesse==0) {
-            if (this.e.getBfs().getHashmap().get(this.test) == null) {
+            if (this.e.getBfs().getHashmap().get(this.sommetActu) == null) {
                 this.e.getBase().decrementerPv(2);
                 this.e.getEnnemies().remove(this);
                 System.out.println(this.e.getBase().getPv());
             } else {
-                if (this.e.getBfs().getHashmap().get(this.test).getY() > this.test.getY()) {
+                if (this.e.getBfs().getHashmap().get(this.sommetActu).getY() > this.sommetActu.getY()) {
                     this.SetX(this.getXValues() + 1);
-                } else if (this.e.getBfs().getHashmap().get(this.test).getY() < this.test.getY()) {
+                } else if (this.e.getBfs().getHashmap().get(this.sommetActu).getY() < this.sommetActu.getY()) {
                     this.SetX(this.getXValues() - 1);
                 }
 
-                if (this.e.getBfs().getHashmap().get(this.test).getX() > this.test.getX()) {
+                if (this.e.getBfs().getHashmap().get(this.sommetActu).getX() > this.sommetActu.getX()) {
                     this.SetY(this.getYValues() + 1);
-                } else if (this.e.getBfs().getHashmap().get(this.test).getX() < this.test.getX()) {
+                } else if (this.e.getBfs().getHashmap().get(this.sommetActu).getX() < this.sommetActu.getX()) {
                     this.SetY(this.getYValues() - 1);
                 }
 
-                if (checkSommet() == this.e.getBfs().getHashmap().get(this.test)) {
-                    this.test = this.e.getBfs().getHashmap().get(this.test);
+                if (checkSommet() == this.e.getBfs().getHashmap().get(this.sommetActu)) {
+                    this.sommetActu = this.e.getBfs().getHashmap().get(this.sommetActu);
                 }
 
                 this.setHitboxX(this.getXValues() + 31);

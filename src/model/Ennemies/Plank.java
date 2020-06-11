@@ -7,8 +7,12 @@ public class Plank extends Ennemies {
     private boolean planté;
 
     public Plank(Jeu e, double x, double y){
-        super(e,x,y,7,10);
+        super(e,x,y, 7,10, 15);
         this.planté = false;
+    }
+
+    public int getVitesseDeBase(){
+        return 7;
     }
 
     @Override

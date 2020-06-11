@@ -27,8 +27,8 @@ public class ViewTourelle {
             test.setImage(new Image("/images/Tourelle2Zone.png"));
         }
         test.setId(a.getId());
-        test.setTranslateX(a.getXValues());
-        test.setTranslateY(a.getYValues());
+        test.setTranslateX(a.getX());
+        test.setTranslateY(a.getY());
         this.p.getChildren().add(test);
     }
 }

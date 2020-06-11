@@ -2,30 +2,34 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Ennemies.BananaMan;
-import model.Ennemies.EnnemIEM;
+import model.Ennemies.Carambo;
 import model.Ennemies.Ennemies;
 import model.Tirs.Tir;
 import model.Tourelles.Tourelles;
+import model.Pièges.Piege;
 
 public class Jeu {
     private ObservableList<Ennemies> ennemies;
     private ObservableList<Tourelles> tourelles;
     private ObservableList<Tir> tirs;
+    private ObservableList<Piege> pieges;
     private Map map;
     private Graphe graphe;
     private Base base;
     private BFS bfs;
     private int nbTour=0;
+    private int vague;
 
-    public Jeu() {
+    public Jeu(){
         this.ennemies = FXCollections.observableArrayList();
         this.tourelles = FXCollections.observableArrayList();
         this.tirs = FXCollections.observableArrayList();
+        this.pieges = FXCollections.observableArrayList();
         this.map = new Map();
         this.graphe = new Graphe( this.map.getMap());
         this.bfs = new BFS(this.graphe);
         this.base = new Base(50);
+        this.vague = 1;
     }
 
     public ObservableList<Ennemies> getEnnemies() {
@@ -76,10 +80,20 @@ public class Jeu {
         return base;
     }
 
+    public ObservableList<Piege> getPieges() {
+        return pieges;
+    }
+
+    public void setPieges(ObservableList pieges) {
+        this.pieges = pieges;
+    }
+
     public void enleverMob(){
         for(int i=0; i<this.ennemies.size(); i++){
             if(!this.ennemies.get(i).isVivant()){
                 System.out.println("mort");
+
+                this.base.gagnerArgent(this.ennemies.get(i).getPrime());
                 this.ennemies.remove(this.ennemies.get(i));
             }
         }
@@ -88,7 +102,16 @@ public class Jeu {
 
     public boolean existeTourelle(int x, int y){
         for(Tourelles t : this.tourelles){
-            if(t.getXValues()==x && t.getYValues()==y){
+            if(t.getX()==x && t.getY()==y){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean existePiege(int x, int y){
+        for(Piege p: this.pieges){
+            if(p.getX()==x && p.getY()==y){
                 return true;
             }
         }
@@ -96,11 +119,9 @@ public class Jeu {
     }
 
     public void unTour(){
-
-        if(this.getNbTour()%500==0){
+        if(this.getNbTour()%50==0){
             System.out.println("Pop");
-            this.ennemies.add(new EnnemIEM(this, 0, 128));
-            this.ennemies.add(new BananaMan(this, 0, 128));
+            this.ennemies.add(new Carambo(this, 0, 128));
         }
 
         try {
@@ -113,14 +134,17 @@ public class Jeu {
 
         for(int i=0; i<this.ennemies.size(); i++){
             this.ennemies.get(i).agit();
+            this.enleverMob();
         }
 
         for(Tourelles t : this.tourelles){
+            t.checkRange(this.ennemies);
             t.Tire();
         }
 
-
-        this.enleverMob();
+        for(Piege p: this.pieges){
+            p.agit();
+        }
 
         nbTour++;
     }
