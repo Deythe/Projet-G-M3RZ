@@ -9,10 +9,11 @@ import model.Tourelles.Tourelles;
 public class ViewTourelle {
 
     private Pane p;
-
+    //On crée une image view et en fonction de la classe de la tourelle il aura une image différente
     public ViewTourelle(Pane p) {
         this.p = p;
     }
+
     public void afficherTourelle(Tourelles a) {
         ImageView test = new ImageView();
         if (a instanceof Tourelle2Base) {
@@ -27,8 +28,8 @@ public class ViewTourelle {
             test.setImage(new Image("/images/Tourelle2Zone.png"));
         }
         test.setId(a.getId());
-        test.setTranslateX(a.getXValues());
-        test.setTranslateY(a.getYValues());
+        test.setTranslateX(a.getX());
+        test.setTranslateY(a.getY());
         this.p.getChildren().add(test);
     }
 }

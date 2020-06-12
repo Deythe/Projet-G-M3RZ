@@ -1,27 +1,33 @@
 package model.Tourelles;
 
 import javafx.collections.ObservableList;
-import model.Ennemies.Ennemies;
+import model.Ennemies.Ennemis;
 import model.Jeu;
-import model.Tirs.Tir2Base;
 import model.Tirs.Tir2Zone;
 
 public class Tourelle2Zone extends Tourelles {
-    private Ennemies cible;
-    private static int frequenceDeTir = 100;
+    //Tourelle qui crée des tire plus lent et qui font des dégats en zone
+
+    private Ennemis cible;
+    private static int frequenceDeTir = 200;
+    private static int valeur = 200;
 
     public Tourelle2Zone(Jeu e, double x, double y) {
         super(e, x, y, 96);
         this.cible = null;
     }
 
+    public static int getValeur() {
+        return valeur;
+    }
+
+    //Regarde si un ennemi entre ou sort du champ de vision de la tourelle et il devient sa cible ou non
     @Override
-    public void checkRange(ObservableList<Ennemies> ennemies){
+    public void checkRange(ObservableList<Ennemis> ennemies){
         if(this.cible==null){
-            for(Ennemies a : ennemies){
+            for(Ennemis a : ennemies){
                 if(this.detectionEnnemie(a)){
                     this.cible=a;
-                    System.out.println("Trouvé");
                     break;
                 }
             }
@@ -29,28 +35,24 @@ public class Tourelle2Zone extends Tourelles {
         else {
             if(!this.cible.isVivant() || !detectionEnnemie(this.cible)){
                 this.cible = null;
-                System.out.println("Perdu");
             }
         }
     }
 
+    //On crée le tir si elle n'est pas inactive et que la fréquence de tir est bonne
     @Override
-    public void Tire(){
-        if(this.jeu.getNbTour()%frequenceDeTir==0){
-            if(this.cible!=null){
-                this.jeu.getTirs().add(new Tir2Zone(this.jeu, this.getXValues(), this.getYValues(), this.cible.getXValues(), this.cible.getYValues()));
-                this.cible=null;
+    public void tirer(){
+        if(this.getTempsInactif()==0) {
+            if (this.jeu.getNbTour() % frequenceDeTir == 0) {
+                if (this.cible != null) {
+                    this.jeu.getTirs().add(new Tir2Zone(this.jeu, this.getX(), this.getY(), this.cible.getX(), this.cible.getY()));
+                    this.cible = null;
+                }
             }
         }
-    }
-
-    @Override
-    public boolean detectionEnnemie(Ennemies a) {
-        if ((a.getXValues() < this.getXValues() + this.getRange() && a.getXValues() > this.getXValues() - this.getRange()) && (a.getYValues() < this.getYValues() + this.getRange() && a.getYValues() > this.getYValues() - this.getRange())) {
-            return true;
-        } else {
-            return false;
+        else{
+            this.setTempsInactif(this.getTempsInactif()-1);
         }
-
     }
+
 }

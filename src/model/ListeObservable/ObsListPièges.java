@@ -2,32 +2,31 @@ package model.ListeObservable;
 
 import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Pane;
-import model.Tourelles.Tourelles;
-import view.ViewTourelle;
+import model.Pièges.Piege;
+import view.ViewPiege;
 
-public class ObsListTourelle implements ListChangeListener<Tourelles> {
-    //Liste qui observe comment réagi la liste des Tourelles du modèle
-
+public class ObsListPièges  implements ListChangeListener<Piege> {
+    //Liste qui observe comment réagi la liste de pièges du modèle
 
     private Pane pane;
-    private ViewTourelle vT;
+    private ViewPiege viewpiege;
 
-    public ObsListTourelle(Pane p, ViewTourelle t){
+    public ObsListPièges(Pane p, ViewPiege vP){
         this.pane =p;
-        this.vT = t;
+        this.viewpiege= vP;
     }
 
     @Override
-    public void onChanged(Change<? extends Tourelles> change) {
-        while(change.next()){
-            //Si une tourelle est ajouté, on crée son image
+    public void onChanged(Change<? extends Piege> change) {
+        while(change.next()) {
+            //Si un piège est ajouté, on crée un sprite
             if(change.wasAdded()){
                 for (int i = 0; i < change.getAddedSubList().size(); ++i) {
-                    this.vT.afficherTourelle(change.getAddedSubList().get(i));
+                    this.viewpiege.afficherPiege(change.getAddedSubList().get(i));
                 }
             }
 
-            //Si une tourelle est retiré, on retire son image
+            //Si un piège est retiré, on le supprime
             else if(change.wasRemoved()){
                 for(int i = this.pane.getChildren().size() - 1; i >= 0; i--){
                     if(this.pane.getChildren().get(i).getId().equals(change.getRemoved().get(0).getId())){
@@ -38,3 +37,5 @@ public class ObsListTourelle implements ListChangeListener<Tourelles> {
         }
     }
 }
+
+

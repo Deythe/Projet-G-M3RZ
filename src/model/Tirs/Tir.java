@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 import model.Jeu;
 
 public abstract class Tir {
+    //Classe mère qui contient les attributs élementaires d'un tir
+
     protected Jeu e;
     private int dgt;
     private double v;
@@ -12,11 +14,10 @@ public abstract class Tir {
     private DoubleProperty y;
     private String id;
 
-    private boolean Detruit;
+
     private static int nbTir;
 
     public Tir(Jeu e, double x, double y, int degat, double vitesse) {
-        this.Detruit =false;
         this.e=e;
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
@@ -26,7 +27,7 @@ public abstract class Tir {
         nbTir++;
     }
 
-    public final DoubleProperty getX() {
+    public final DoubleProperty getXProperty() {
         return x;
     }
 
@@ -34,11 +35,11 @@ public abstract class Tir {
         this.x.set(d);
     }
 
-    public final double getXValues(){
+    public final double getX(){
         return x.getValue();
     }
 
-    public final DoubleProperty getY() {
+    public final DoubleProperty getYProperty() {
         return y;
     }
 
@@ -46,7 +47,7 @@ public abstract class Tir {
         this.y.set(d);
     }
 
-    public final double getYValues(){
+    public final double getY(){
         return y.getValue();
     }
 
@@ -56,14 +57,6 @@ public abstract class Tir {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public boolean EstDetruit() {
-        return Detruit;
-    }
-
-    public void EstDetruit(boolean estDetruit) {
-        this.Detruit = estDetruit;
     }
 
     public int getDgt() {
@@ -83,7 +76,6 @@ public abstract class Tir {
     }
 
     public abstract void seDeplace();
-
 
     public abstract void touche();
 

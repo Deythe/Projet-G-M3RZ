@@ -8,12 +8,14 @@ public class Sommet {
     private int y;
     private ArrayList<Sommet> adjacents;
 
+    //C'est ici qu'on crée un sommet qui servira pour le graphe PUIS pour le BFS
     public Sommet(int x, int y) {
         this.x = x;
         this.y = y;
         this.adjacents = new ArrayList<Sommet>();
     }
 
+    //Méthode qui renvoie true si les coordonnées du sommet sont à coté de celles d'un autre sommet
     public boolean estAdjacent(Sommet m){
         if(this.getX()==m.getX()+1){
             if(this.getY()==m.getY()){
@@ -42,14 +44,6 @@ public class Sommet {
         return false;
     }
 
-    public double xPixel(){
-        return this.getX()*32;
-    }
-
-    public double yPixel(){
-        return this.getY()*32;
-    }
-
     public ArrayList<Sommet> getAdjacents() {
         return adjacents;
     }
@@ -65,6 +59,7 @@ public class Sommet {
     public int getY() {
         return y;
     }
+
 
     @Override
     public boolean equals(Object o) {

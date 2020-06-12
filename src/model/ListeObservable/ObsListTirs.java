@@ -10,6 +10,8 @@ import model.Tirs.Tir2Base;
 import model.Tirs.Tir2Zone;
 
 public class ObsListTirs  implements ListChangeListener<Tir> {
+    //Liste qui observe comment réagi la liste des Tir du modèle
+
 
     private Pane pane;
 
@@ -20,10 +22,13 @@ public class ObsListTirs  implements ListChangeListener<Tir> {
     @Override
     public void onChanged(Change<? extends Tir> change) {
         while(change.next()) {
+
+            //Si un tir est ajouté, on lui crée un cercle et on lie ses coordonnées au tir du modèle
             if (change.wasAdded()) {
                 for(int i=0; i<change.getAddedSubList().size(); i++){
                     Circle r = new Circle();
 
+                    //Instance of n'est pas la solution la plus stable mais la plus adéquate dans cette situation
                     if(change.getAddedSubList().get(i) instanceof Tir2Base){
                         r.setRadius(2);
                         r.setFill(Color.RED);
@@ -34,13 +39,14 @@ public class ObsListTirs  implements ListChangeListener<Tir> {
                         r.setFill(Color.PINK);
                     }
 
-                    r.translateXProperty().bind(change.getAddedSubList().get(i).getX());
-                    r.translateYProperty().bind(change.getAddedSubList().get(i).getY());
+                    r.translateXProperty().bind(change.getAddedSubList().get(i).getXProperty());
+                    r.translateYProperty().bind(change.getAddedSubList().get(i).getYProperty());
                     r.setId(change.getAddedSubList().get(i).getId());
                     this.pane.getChildren().add(r);
                 }
             }
 
+            //On supprime le tir dans la vue, en cherchant le bon
             else if(change.wasRemoved()){
                 for(Node c : this.pane.getChildren()){
                     if(c.getId().equals(change.getRemoved().get(0).getId())){

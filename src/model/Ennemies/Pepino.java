@@ -2,16 +2,16 @@ package model.Ennemies;
 
 import model.Jeu;
 
-public class Pepino extends Ennemies {
+public class Pepino extends Ennemis {
     private int prime;
-    private static final int vitesse = 1;
+    //Ennemi faible mais rapide qui est généré par la plank
 
     public Pepino(Jeu e, double x, double y){
-        super(e , x, y,vitesse,5);
+        super(e , x, y, 1,5, 10);
     }
 
-    @Override
-    public void prendreDesDgt(int dgt) {
+    public int getVitesseDeBase(){
+        return 1;
     }
 
     @Override

@@ -3,8 +3,12 @@ package model.Pièges;
 import model.Jeu;
 
 public abstract class Piege {
+    //Classe mère des pièges qui contient les attributs nécessaires aux pièges
+
     double x,y;
     boolean actif;
+    private static int nbPiege=1;
+    private String id;
     protected Jeu jeu;
 
     public Piege(Jeu j, double x, double y){
@@ -12,6 +16,9 @@ public abstract class Piege {
         this.y=y;
         this.jeu=j;
         this.actif=true;
+        this.id = "P"+nbPiege;
+        nbPiege++;
+        System.out.println("Piège placé");
     }
 
     public double getX() {
@@ -40,5 +47,14 @@ public abstract class Piege {
 
     public abstract void agit();
 
-    public abstract boolean checkRange();
+    //Elle est en abstract car les différent piège on des méthodes similaires mais différente de peu
+    public abstract boolean checkEnnemi();
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

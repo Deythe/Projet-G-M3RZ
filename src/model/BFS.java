@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class BFS {
+    //Algorithme permettant au ennemi d'aller à un point A à un point B en cherchant le chemin le plus court
+
     private HashMap<Sommet, Sommet> hashmap;
     private Graphe graphe;
     private Sommet début;
@@ -16,6 +18,7 @@ public class BFS {
         créationBFS();
     }
 
+    //Permet de trouver le sommet d'où partira l'algo
     public void trouvéPremier(){
         for (Sommet m : this.graphe.getListeSommet()){
             if(m.getX() == this.graphe.getxDépart() && m.getY() == this.graphe.getyDépart()){
@@ -24,16 +27,17 @@ public class BFS {
         }
     }
 
+    //C'est ici l'algo tourne, c'est à dire que l'on couple des Sommet dans une hashMap
     public void créationBFS(){
-        LinkedList<Sommet> test = new LinkedList<>();
+        LinkedList<Sommet> file = new LinkedList<>();
         ArrayList<Sommet> déjaPassé = new ArrayList<>();
-        test.addFirst(this.début);
-        while(!test.isEmpty()){
-            Sommet s = test.removeLast();
-            déjaPassé.add(s);
+        file.addFirst(this.début);
+        déjaPassé.add(this.début);
+        while(!file.isEmpty()){
+            Sommet s = file.removeLast();
             for(int i=0; i<s.getAdjacents().size(); i++){
                 if(!déjaPassé.contains(s.getAdjacents().get(i))){
-                    test.addFirst(s.getAdjacents().get(i));
+                    file.addFirst(s.getAdjacents().get(i));
                     déjaPassé.add(s.getAdjacents().get(i));
                     this.hashmap.put(s.getAdjacents().get(i), s);
                 }
