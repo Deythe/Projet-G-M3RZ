@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -54,6 +55,9 @@ public class Controller implements Initializable {
 
     @FXML
     private Label fin;
+
+    @FXML
+    private ImageView logo;
 
     @FXML
     private Button niveau1;
@@ -136,6 +140,7 @@ public class Controller implements Initializable {
     public void lancerJeu(){
 
         //On rend visible les éléments nécessaires du jeu + on initialise le jeu"
+        this.logo.setVisible(false);
         this.pane.getChildren().remove(this.fin);
         this.pane.getChildren().remove(menuAccueil);
         this.menuAchat.setVisible(true);
@@ -168,7 +173,6 @@ public class Controller implements Initializable {
 
     public void menuChoixNiveau(ActionEvent e){
         //Affiche les menu des choix de niveau
-        this.pane.getChildren().add(menuNiveau);
         this.menuNiveau.setVisible(true);
         this.pane.getChildren().remove(menuAccueil);
     }
@@ -182,6 +186,7 @@ public class Controller implements Initializable {
             this.niveau=2;
         }
         this.pane.getChildren().remove(menuNiveau);
+        this.menuAccueil.setVisible(false);
         lancerJeu();
     }
 
@@ -346,6 +351,7 @@ public class Controller implements Initializable {
         this.pane.getChildren().add(this.tilepane);
         this.pane.getChildren().add(this.fin);
         this.pane.getChildren().add(this.menuAccueil);
+        this.pane.getChildren().add(menuNiveau);
     }
 
     //Permet de savoir quel bouton est enclenché et ducoup de le mettre en couleur

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Projet-G-M3RZ">
+    <output-path>$PROJECT_DIR$/out/artifacts/Projet_G_M3RZ</output-path>
+    <root id="root">
+      <element id="archive" name="Projet_G_M3RZ.jar">
+        <element id="module-output" name="Projet-G-M3RZ" />
+      </element>
+    </root>
+  </artifact>
+</component>
